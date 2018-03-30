@@ -1,0 +1,27 @@
+page-participant-list {
+
+  .background_image
+  {
+    background-image: url("../assets/imgs/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .button_submit
+  {
+    background-color: rgb(0,144,215);
+    padding: 0 2em;
+    font-size: 20px;
+    border-radius: 0;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+  ion-icon {
+    display: inline-block;
+    font-size: 2em;
+    color: #ffffff;
+  }
+  [col-md-4]
+  {
+    padding: 10px 2%;
+  }
+}

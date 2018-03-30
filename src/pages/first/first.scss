@@ -1,0 +1,29 @@
+page-first {
+
+  .background_image
+  {
+    background-image: url("../assets/imgs/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .item-select
+  {
+    width: 32%;
+    padding: 5px 56px;
+    background-color: rgb(198,87,154);
+    font-size: 22px;
+    font-weight: bold;
+    border: none;
+    color: #ffffff;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    position: absolute;
+    top: 45%;
+    left: 34%;
+  }
+  .alert-ios .alert-title
+  {
+    padding-bottom: 12px;
+    color: #ffffff;
+  }
+}

@@ -1,0 +1,31 @@
+@font-face {
+  font-family: Dubai-Regular;
+  src: url("../assets/font/Dubai-Regular.ttf");
+}
+*
+{
+  font-family: Dubai-Regular;
+}
+
+page-thankyou {
+
+  .background_image
+  {
+    background-image: url("../assets/imgs/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  ion-icon {
+    display: inline-block;
+    font-size: 2em;
+    color: #ffffff;
+  }
+  .thank
+  {
+    text-align: center;
+    font-size: 4em;
+    color: rgb(198,87,154);
+    margin-top: 25%;
+    font-weight: bold;
+  }
+}
