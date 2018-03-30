@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {DatabaseProvider} from "../../providers/database/database";
 import {ThankyouPage} from "../thankyou/thankyou";
 import {HomePage} from "../home/home";
+import {el} from "@angular/platform-browser/testing/src/browser_util";
 
 
 /**
@@ -23,6 +24,7 @@ export class QuestionsTablePage {
   options:any[] = [];
   tempAnswer:any[] = [];
   list:any;
+  suggestion_text;
   crm_key = [];
   selectedMultiple;
   selectedOptions;
@@ -139,11 +141,87 @@ export class QuestionsTablePage {
       console.log("RESPONSE START->> "+response.RESPONSE);
     }
     this.backButtonShow = true;
-    // this.selectedOptionPrev ="";
     let env = this;
-    // this.str_array = [];
-    // env.selectedOption = env.answers;
     console.log("Selected->" + env.selectedOptionsFinal);
+    if(this.questionType=="multiple") {
+      if (env.answers.length == 0) {
+
+        this.selectedMultiple = this.responseArray[this.i].RESPONSE;
+        this.responseArray[this.i] = {
+          QUESTION_ID: this.questionId,
+          RESPONSE: this.selectedMultiple,
+        };
+      }
+      else {
+        let responseString: string = "";
+        console.log("its undefined");
+        for (let ans of env.answers) {
+          responseString = ans + "," + responseString;
+        }
+        env.selectedMultiple = responseString;
+        this.responseArray[this.i] = {
+          QUESTION_ID: this.questionId,
+          RESPONSE: this.selectedMultiple,
+        };
+      }
+    }
+    else if(this.questionType=="single") {
+      if (this.selectedOptionsFinal == undefined) {
+        console.log("I am in if");
+        if (this.responseArray.length > 0) {
+          console.log("this.responseArray[this.i].RESPONSE->" + this.responseArray[this.i].RESPONSE);
+          this.selectedOptionsFinal = this.responseArray[this.i].RESPONSE;
+          this.responseArray[this.i] = {
+            QUESTION_ID: this.questionId,
+            RESPONSE: this.selectedOptionsFinal,
+          };
+        }
+      }
+      else {
+        console.log("I am in else");
+        this.responseArray[this.i] = {
+          QUESTION_ID: this.questionId,
+          RESPONSE: this.selectedOptionsFinal,
+        };
+      }
+    }
+    else if(this.questionType=="suggestion")
+    {
+      if(this.suggestion_text == undefined)
+      {
+        this.suggestion_text = this.responseArray[this.i].RESPONSE;
+        this.responseArray[this.i] = {
+          QUESTION_ID: this.questionId,
+          RESPONSE: this.suggestion_text,
+        };
+      }
+      else {
+        console.log("suggestion_text-> " + this.suggestion_text);
+        this.responseArray[this.i] = {
+          QUESTION_ID: this.questionId,
+          RESPONSE: this.suggestion_text,
+        };
+      }
+    }
+    for(let response of this.responseArray)
+    {
+      console.log("RESPONSE->> "+response.RESPONSE);
+    }
+
+    env.answers =[];
+    this.selectedOptionsFinal = undefined;
+    this.selectedOption = undefined;
+    this.suggestion_text = undefined;
+    this.selectedMultiple = undefined;
+    this.checkNextQuestionAnswer();
+  }
+
+  prevPage(){
+    let env = this;
+    if (this.i<this.questionsArrayLength)
+    {
+      this.lastQuestion = false;
+    }
     if(this.questionType=="multiple") {
       if (env.answers.length == 0) {
         // let responseString:string = "";
@@ -167,22 +245,14 @@ export class QuestionsTablePage {
         };
       }
     }
-
-
-
-
-
-    else if(this.questionType=="single") {
+    else if(this.questionType == "single") {
       if (this.selectedOptionsFinal == undefined) {
         console.log("I am in if");
-        if (this.responseArray.length > 0) {
-          console.log("this.responseArray[this.i].RESPONSE->" + this.responseArray[this.i].RESPONSE);
-          this.selectedOptionsFinal = this.responseArray[this.i].RESPONSE;
-          this.responseArray[this.i] = {
-            QUESTION_ID: this.questionId,
-            RESPONSE: this.selectedOptionsFinal,
-          };
-        }
+        this.selectedOptionsFinal = this.responseArray[this.i].RESPONSE;
+        this.responseArray[this.i] = {
+          QUESTION_ID: this.questionId,
+          RESPONSE: this.selectedOptionsFinal,
+        };
       }
       else {
         console.log("I am in else");
@@ -192,116 +262,56 @@ export class QuestionsTablePage {
         };
       }
     }
-    for(let response of this.responseArray)
+    else if(this.questionType=="suggestion")
     {
-      console.log("RESPONSE->> "+response.RESPONSE);
-    }
-    // this.responseArray.push();
-    // this.i++;
-
-    // env.tempAnswer = this.answers;
-    env.answers =[];
-
-    // this.selectedOptionPrev ="";
-    // this.selectedOptionPrev = this.responseArray[this.i].RESPONSE;
-    // if (this.selectedOptionPrev.indexOf(',') > -1) {
-    //   console.log("Multiple");
-    //   this.str_array = [];
-    //   this.str_array = this.selectedOptionPrev.split(',');
-    //
-    //   for(let i = 0; i < this.str_array.length; i++) {
-    //     this.str_array[i] = this.str_array[i].replace(/^\s*/, "").replace(/\s*$/, "");
-    //   }
-    //   for(let selectedOptions of this.str_array)
-    //   {
-    //     this.answers.push(selectedOptions);
-    //   }
-    //
-    // }
-    this.selectedOptionsFinal = undefined;
-    this.selectedOption = undefined;
-    this.selectedMultiple = undefined;
-    this.checkNextQuestionAnswer();
-  }
-
-  prevPage(){
-    let env = this;
-    if (this.i<this.questionsArrayLength)
-    {
-      this.lastQuestion = false;
-    }
-  if(this.questionType=="multiple") {
-    if (env.answers.length == 0) {
-      // let responseString:string = "";
-
-      this.selectedMultiple = this.responseArray[this.i].RESPONSE;
-      this.responseArray[this.i] = {
-        QUESTION_ID: this.questionId,
-        RESPONSE: this.selectedMultiple,
-      };
-    }
-    else {
-      let responseString: string = "";
-      console.log("its undefined");
-      for (let ans of env.answers) {
-        responseString = ans + "," + responseString;
-      }
-      env.selectedMultiple = responseString;
-      this.responseArray[this.i] = {
-        QUESTION_ID: this.questionId,
-        RESPONSE: this.selectedMultiple,
-      };
-    }
-  }
-  else if(this.questionType == "single") {
-    if (this.selectedOptionsFinal == undefined) {
-      console.log("I am in if");
-      this.selectedOptionsFinal = this.responseArray[this.i].RESPONSE;
-      this.responseArray[this.i] = {
-        QUESTION_ID: this.questionId,
-        RESPONSE: this.selectedOptionsFinal,
-      };
-    }
-    else {
-      console.log("I am in else");
-      this.responseArray[this.i] = {
-        QUESTION_ID: this.questionId,
-        RESPONSE: this.selectedOptionsFinal,
-      };
-    }
-  }
-      this.answers = [];
-      this.i--;
-      // this.selectedOption ="";
-      this.selectedOptionPrev ="";
-      this.selectedOptionPrev = this.responseArray[this.i].RESPONSE;
-      if (this.selectedOptionPrev.indexOf(',') > -1) {
-        console.log("Multiple");
-        this.str_array = [];
-        this.str_array = this.selectedOptionPrev.split(',');
-
-        for(let i = 0; i < this.str_array.length; i++) {
-          this.str_array[i] = this.str_array[i].replace(/^\s*/, "").replace(/\s*$/, "");
-        }
-        for(let selectedOptions of this.str_array)
-        {
-          this.answers.push(selectedOptions);
-        }
-
-      }
-      console.log("Prev answer->" + this.selectedOptionPrev);
-      if(this.i<=0)
+      if(this.suggestion_text == undefined)
       {
-        this.backButtonShow = false;
+        this.suggestion_text = this.responseArray[this.i].RESPONSE;
+        this.responseArray[this.i] = {
+          QUESTION_ID: this.questionId,
+          RESPONSE: this.suggestion_text,
+        };
       }
+      else {
+        console.log("suggestion_text-> " + this.suggestion_text);
+        this.responseArray[this.i] = {
+          QUESTION_ID: this.questionId,
+          RESPONSE: this.suggestion_text,
+        };
+      }
+    }
+    this.answers = [];
+    this.i--;
+    // this.selectedOption ="";
+    this.selectedOptionPrev ="";
+    this.suggestion_text = this.responseArray[this.i].RESPONSE;
+    this.selectedOptionPrev = this.responseArray[this.i].RESPONSE;
+    if (this.selectedOptionPrev.indexOf(',') > -1) {
+      console.log("Multiple");
+      this.str_array = [];
+      this.str_array = this.selectedOptionPrev.split(',');
+
+      for(let i = 0; i < this.str_array.length; i++) {
+        this.str_array[i] = this.str_array[i].replace(/^\s*/, "").replace(/\s*$/, "");
+      }
+      for(let selectedOptions of this.str_array)
+      {
+        this.answers.push(selectedOptions);
+      }
+    }
+    console.log("Prev answer->" + this.selectedOptionPrev);
+    if(this.i<=0)
+    {
+      this.backButtonShow = false;
+    }
     for(let response of this.responseArray)
     {
       console.log("RESPONSE->> "+response.RESPONSE);
     }
     this.selectedOptionsFinal =undefined;
     this.selectedMultiple = undefined;
-      console.log("back Button");
-      this.loadQuestion();
+    console.log("back Button");
+    this.loadQuestion();
 
   }
   selecteServer(answer){
@@ -354,6 +364,8 @@ export class QuestionsTablePage {
 
       }
       console.log("Prev answer->" + this.selectedOptionPrev);
+      this.suggestion_text = this.selectedOptionPrev;
+
     }
     this.loadQuestion();
   }

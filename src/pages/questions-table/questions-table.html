@@ -171,7 +171,7 @@
         <ion-list class="five" *ngIf="questionType == 'suggestion' " style="margin:30px 80px;">
 
           <ion-item>
-            <ion-input type="text" placeholder="Suggestion"></ion-input>
+            <ion-input type="text" [(ngModel)]="suggestion_text" placeholder="Suggestion"></ion-input>
           </ion-item>
 
         </ion-list>
