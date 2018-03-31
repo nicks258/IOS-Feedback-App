@@ -108,9 +108,7 @@
 
       <!--Rating Start-->
 
-        <ion-list *ngIf="questionType == 'rating'" class="seven_screen" radio-group style="margin: 5px 50px;">
-
-
+        <ion-list *ngIf="questionType == 'rating' " class="seven_screen" radio-group style="margin: 5px 50px;">
 
           <ion-item  >
             <ion-radio *ngIf="selectedOptionPrev == 1" (ionSelect)="selecteServer(1)" checked class="one" value="1"></ion-radio>
