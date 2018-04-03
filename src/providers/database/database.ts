@@ -141,6 +141,27 @@ export class DatabaseProvider {
     });
   }
 
+  getParticipantsCoparts(eventId) {
+    return this.database.executeSql("SELECT * FROM PARTICIPANTS_TABLE WHERE EVENT_ID = ? AND PARTICIPANTS_TYPE = 'coparts'", [eventId]).then((data) => {
+      let developers = [];
+
+      if (data.rows.length > 0) {
+        for (let i = 0; i < data.rows.length; i++) {
+          developers.push({
+            Event_ID: data.rows.item(i).Event_ID,
+            PARTICIPANTS_ID: data.rows.item(i).PARTICIPANTS_ID,
+            PARTICIPANTS_NAME: data.rows.item(i).PARTICIPANTS_NAME,
+            PARTICIPANTS_TYPE: data.rows.item(i).PARTICIPANTS_TYPE,
+          });
+        }
+      }
+      return developers;
+    }, err => {
+      console.log('Error: ', err);
+      return err;
+    });
+  }
+
 
   getEventId(eventName) {
     return this.database.executeSql("SELECT * FROM EVENTS_TABLE_NEW WHERE EVENT_NAME = ?", [eventName]).then((data) => {
@@ -163,6 +184,29 @@ export class DatabaseProvider {
 
 
   getAllQuestions(participantId,eventId) {
+    return this.database.executeSql("SELECT * FROM QUESTION_TABLE_REAL WHERE PARTICIPANTS_ID = ? AND Event_ID = ?", [participantId,eventId]).then((data) => {
+      let developers = [];
+
+      if (data.rows.length > 0) {
+        for (let i = 0; i < data.rows.length; i++) {
+          developers.push({
+            Event_ID: data.rows.item(i).Event_ID,
+            PARTICIPANTS_ID: data.rows.item(i).PARTICIPANTS_ID,
+            QUESTION_ID: data.rows.item(i).QUESTION_ID,
+            QUESTIONS: data.rows.item(i).QUESTIONS,
+            OPTIONS: data.rows.item(i).OPTIONS,
+            QUESTION_TYPE: data.rows.item(i).QUESTION_TYPE,
+          });
+        }
+      }
+      return developers;
+    }, err => {
+      console.log('Error: ', err);
+      return err;
+    });
+  }
+
+  getAllQuestionsForCoparts(participantId,eventId) {
     return this.database.executeSql("SELECT * FROM QUESTION_TABLE_REAL WHERE PARTICIPANTS_ID = ? AND Event_ID = ?", [participantId,eventId]).then((data) => {
       let developers = [];
 
@@ -223,6 +267,60 @@ export class DatabaseProvider {
     }, err => {
       console.log('Error: ', err);
       return [];
+    });
+  }
+
+  getAllResponse(){
+    return this.database.executeSql("SELECT * FROM RESPONSE_TABLE ", []).then((data) => {
+      let developers = [];
+      if (data.rows.length > 0) {
+        for (let i = 0; i < data.rows.length; i++) {
+          developers.push({
+            Event_ID: data.rows.item(i).Event_ID,
+            PARTICIPANTS_ID: data.rows.item(i).PARTICIPANTS_ID,
+            QUESTION_ID: data.rows.item(i).QUESTION_ID,
+            RESPONSE: data.rows.item(i).RESPONSE
+          });
+        }
+      }
+      return developers;
+    }, err => {
+      console.log('Error: ', err);
+      return [];
+    });
+  }
+
+  deleteEventData(){
+    return this.database.executeSql("DELETE FROM EVENTS_TABLE_NEW ",[]).then(data => {
+      return data;
+    }, err => {
+      console.log('Error: ', err);
+      return err;
+    });
+  }
+  deleteQuestionData(){
+    return this.database.executeSql("DELETE FROM QUESTION_TABLE_REAL ",[]).then(data => {
+      return data;
+    }, err => {
+      console.log('Error: ', err);
+      return err;
+    });
+  }
+  deleteParticipantData(){
+    return this.database.executeSql("DELETE FROM PARTICIPANTS_TABLE ",[]).then(data => {
+      return data;
+    }, err => {
+      console.log('Error: ', err);
+      return err;
+    });
+  }
+
+  deleteResponseData(){
+    return this.database.executeSql("DELETE FROM RESPONSE_TABLE ",[]).then(data => {
+      return data;
+    }, err => {
+      console.log('Error: ', err);
+      return err;
     });
   }
 

@@ -4,6 +4,7 @@ import {DatabaseProvider} from "../../providers/database/database";
 import {ThankyouPage} from "../thankyou/thankyou";
 import {HomePage} from "../home/home";
 import {el} from "@angular/platform-browser/testing/src/browser_util";
+import {CopartsListPage} from "../coparts-list/coparts-list";
 
 
 /**
@@ -44,6 +45,7 @@ export class QuestionsTablePage {
   questionsArrayLength;
   questionsValue;
   selectedOption;
+  selectedType;
   selectedOptionsFinal;
   selectedOptionPrev;
   selectedOptionMultiplePrev;
@@ -51,6 +53,7 @@ export class QuestionsTablePage {
   i= 0;
   constructor(public navCtrl: NavController, public navParams: NavParams, public databaseProvider: DatabaseProvider) {
     this.questionsArray =  JSON.parse(this.navParams.get("questions"));
+    this.selectedType = this.navParams.get('selectedType');
     this.questionsArrayLength = this.questionsArray.length;
     // alert(this.navParams.get("eventName"));
     this.eventId = this.questionsArray[this.questionsArrayLength - 1 - this.i].Event_ID;
@@ -73,18 +76,19 @@ export class QuestionsTablePage {
     let env = this;
     if (this.i > this.questionsArrayLength){
       alert("Last Question");
-      for(let response of this.responseArray)
-      {
-        env.databaseProvider.addResponse(env.eventId,env.participantId,response.QUESTION_ID,response.RESPONSE);
-        console.log("QUESTION_ID->"+response.QUESTION_ID +" RESPONSE->" + response.RESPONSE);
-      }
+      // for(let response of this.responseArray)
+      // {
+      //   env.databaseProvider.addResponse(env.eventId,env.participantId,response.QUESTION_ID,response.RESPONSE);
+      //   console.log("QUESTION_ID->"+response.QUESTION_ID +" RESPONSE->" + response.RESPONSE);
+      // }
       // console.log(this.responseArray.toString())
     }
 
     // if (this.i == this.questionsArrayLength-1){
     //   this.lastQuestion = true;
     // }
-    else {
+    else
+      {
       console.log("Loading Events");
       let env = this;
 
@@ -135,7 +139,59 @@ export class QuestionsTablePage {
   }
 
   nextPage(){
-    this.navCtrl.push(ThankyouPage);
+    let env =this;
+    if(this.questionType=="multiple") {
+      let responseString: string = "";
+      console.log("its undefined");
+      for (let ans of env.answers) {
+        responseString = ans + "," + responseString;
+      }
+      env.selectedMultiple = responseString;
+      this.responseArray[this.i] = {
+        QUESTION_ID: this.questionId,
+        RESPONSE: this.selectedMultiple,
+      };
+    }
+
+    else if(this.questionType=="single") {
+      console.log("I am in else single");
+      this.responseArray[this.i] = {
+        QUESTION_ID: this.questionId,
+        RESPONSE: this.selectedOptionsFinal,
+      };
+    }
+
+    else if(this.questionType=="rating") {
+      console.log("I am in else rating");
+      this.responseArray[this.i] = {
+        QUESTION_ID: this.questionId,
+        RESPONSE: this.selectedRating,
+      };
+    }
+
+    else if(this.questionType=="suggestion") {
+      console.log("suggestion_text-> " + this.suggestion_text);
+      this.responseArray[this.i] = {
+        QUESTION_ID: this.questionId,
+        RESPONSE: this.suggestion_text,
+      };
+    }
+
+    if (this.selectedType == 'individual') {
+      this.navCtrl.push(ThankyouPage, {
+        response: JSON.stringify(this.responseArray),
+        eventId: this.eventId,
+        paticipantId: this.participantId
+      });
+    }
+    else {
+      this.navCtrl.push(CopartsListPage,{
+        response: JSON.stringify(this.responseArray),
+        eventId: this.eventId,
+        paticipantId: this.participantId
+      });
+    }
+
   }
 
   nextQuestion(){

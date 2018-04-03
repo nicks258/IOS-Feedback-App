@@ -1,52 +1,72 @@
 import { Component } from '@angular/core';
-import {LoadingController, NavController, Platform} from 'ionic-angular';
-import {DatabaseProvider} from "../../providers/database/database";
-import {QuestionsTablePage} from "../questions-table/questions-table";
+import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {Http} from "@angular/http";
-import {ParticipantListPage} from "../participant-list/participant-list";
-import {OptionPage} from "../option/option";
-import {OptionsPage} from "../options/options";
+import {DatabaseProvider} from "../../providers/database/database";
+import { ModalController } from 'ionic-angular';
+import {AuthPage} from "../auth/auth";
+import {HomePage} from "../home/home";
 
+/**
+ * Generated class for the OptionPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-option',
+  templateUrl: 'option.html',
 })
-export class HomePage {
-  event;
-  eventName;
-  developers:any[] = [];
-  options:any[] = [];
-  list:any;
-  crm_key = [];
-  crm_val = [];
-  questionsArray = [];
+export class OptionPage {
   loadingPopup;
-  questions;
-  i;
-  constructor(public navCtrl: NavController,public dbProvider:DatabaseProvider,public platform:Platform,
-              public http:Http,public loadingCtrl:LoadingController ) {
-    console.log("Constructer");
+  developers:any[] = [];
+  response:any[] = [];
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController,public http: Http,
+              public dbProvider: DatabaseProvider,public modalCtrl : ModalController) {
     let env = this;
-    platform.ready().then(data=>{
-      env.loadingPopup = env.loadingCtrl.create({
-        content: "Fetching Events...",
-        spinner: 'circles'
-      });
-      env.loadingPopup.present();
-      // env.loadAllEvents();
-      setTimeout(function () {
-        env.loadAllEvents();
-      },5000);
 
+    env.loadingPopup = env.loadingCtrl.create({
+      content: "Fetching Events...",
+      spinner: 'circles'
     });
-
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
+    console.log('ionViewDidLoad OptionPage');
   }
 
-  loadAllEvents(){
+  syncResponseData(){
+    let env = this;
+    env.loadingPopup.present();
+    env.dbProvider.getAllResponse().then(data=>{
+      env.response = data;
+      for(let response of env.response)
+      {
+        let body = new FormData();
+        body.append('event_id', response.Event_ID);
+        body.append('participant_id',response.PARTICIPANTS_ID);
+        body.append('question_id', response.QUESTION_ID);
+        body.append('response', response.RESPONSE);
+        let headers = new Headers();
+        let options = {headers: headers};
+        this.http.post('http://52.66.132.37/feed_back/Rest/insertresponses/', body).subscribe(data => {
+          console.log(data);
+          //      loadingPopup.dismiss();
+          let data_to_use = data.json();
+          console.log(data_to_use);
+        }, error2 => {
+          //        loadingPopup.dismiss();
+          console.log("error->" + error2);
+        });
+      }
+      env.loadingPopup.dismiss();
+    }).catch(error=>{
+      alert("Check Internet Connection");
+    })
+  }
+
+  updateAppData(){
     console.log("Loading Events");
     let env = this;
     this.http.get('http://52.66.132.37/feed_back/Rest/getData', {}).map(res => res.json()).subscribe(data => {
@@ -95,59 +115,29 @@ export class HomePage {
           // console.log(dev.firstname + "->" + dev.lastname + "->" + dev.email);
           console.log(dev.Event_ID + "->" + "->" + dev.EVENT_NAME );
         }
-
         env.loadingPopup.dismiss();
       }).catch(error=>{
         console.log("Home.ts error->" + error)
       });
     },error2 => {
-      env.dbProvider.getAllEvents().then(data => {
-
-        env.developers = data;
-        console.log(data);
-        for(let dev of env.developers)
-        {
-          // console.log(dev.firstname + "->" + dev.lastname + "->" + dev.email);
-          console.log(dev.Event_ID + "->" + "->" + dev.EVENT_NAME );
-        }
-
-        env.loadingPopup.dismiss();
-      }).catch(error=>{
-        console.log("Home.ts error->" + error)
-      });
-      env.loadingPopup.dismiss();
+             env.loadingPopup.dismiss();
       console.log("error->" + error2);
     });
   }
 
-  loadParticipants(){
-
+  deleteAppData(){
+    let data = { message : 'appData' };
+    let modalPage = this.modalCtrl.create('AuthPage',data);
+    modalPage.present();
+  }
+  deleteResponse(){
+    let data = { message : 'responseData' };
+    let modalPage = this.modalCtrl.create('AuthPage',data);
+    modalPage.present();
   }
 
-
-  gotoQuestions(){
-
-  }
-
-  loadAllQuestions(){
-    // this.navCtrl.push(QuestionsTablePage);
-    let env = this;
-    let eventId;
-    let isCopart;
-    env.dbProvider.getEventId(env.eventName).then(data=>{
-        for(let dev of data)
-        {
-          eventId = dev.Event_ID;
-          isCopart = dev.IS_COPARTS;
-        }
-      console.log("eventId=>" + eventId + "isCopart=>" + isCopart );
-      env.navCtrl.push(ParticipantListPage,{eventId:eventId,eventCopart:isCopart},{});
-    }).catch(error=>{
-        console.log("Error");
-    })
-  }
-  optionsPage(){
-    this.navCtrl.push(OptionPage);
+  onBack(){
+    this.navCtrl.push(HomePage)
   }
 
 }

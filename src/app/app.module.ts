@@ -16,6 +16,11 @@ import {QuestionsTablePage} from "../pages/questions-table/questions-table";
 import {FirstPage} from "../pages/first/first";
 import {ParticipantListPage} from "../pages/participant-list/participant-list";
 import {ThankyouPage} from "../pages/thankyou/thankyou";
+import {OptionPage} from "../pages/option/option";
+import {AuthPage} from "../pages/auth/auth";
+import {OptionsPage} from "../pages/options/options";
+import {AuthPageModule} from "../pages/auth/auth.module";
+import {CopartsListPage} from "../pages/coparts-list/coparts-list";
 
 @NgModule({
   declarations: [
@@ -24,13 +29,18 @@ import {ThankyouPage} from "../pages/thankyou/thankyou";
     FirstPage,
     ParticipantListPage,
     QuestionsTablePage,
+    OptionPage,
+    OptionsPage,
+    CopartsListPage,
     ThankyouPage,
   ],
   imports: [
     BrowserModule,
     IonicStorageModule.forRoot(),
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    AuthPageModule,
+    IonicModule.forRoot(MyApp,{scrollAssist:false,
+      autoFocusAssist:false}),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -38,6 +48,10 @@ import {ThankyouPage} from "../pages/thankyou/thankyou";
     HomePage,
     ParticipantListPage,
     FirstPage,
+    CopartsListPage,
+    OptionsPage,
+    AuthPage,
+    OptionPage,
     QuestionsTablePage,
     ThankyouPage,
   ],

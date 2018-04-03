@@ -1,0 +1,18 @@
+@font-face {
+  font-family: Dubai-Regular;
+  src: url("../assets/font/Dubai-Regular.ttf");
+}
+*
+{
+  font-family: Dubai-Regular;
+}
+
+
+page-option {
+  .background_image
+  {
+    background-image: url("../assets/imgs/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}

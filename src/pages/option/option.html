@@ -1,0 +1,44 @@
+<!--
+  Generated template for the OptionPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+
+
+<ion-content padding class="background_image">
+  <img src="assets/imgs/dubaiwhite.png" style="width: 40mm;float: right">
+  <ion-grid>
+    <ion-row>
+      <ion-col style="margin-top: 25%;" align="center" col-md-6 offset-3>
+
+        <ion-col col-md-6>
+          <button ion-button  round (click)="syncResponseData()" style="border-radius: 12px 0;">Sync Response</button>
+        </ion-col>
+
+        <ion-col col-md-6>
+          <button ion-button  round (click)="updateAppData()" style="border-radius: 12px 0;">Update App Data</button>
+        </ion-col>
+
+        <ion-col col-md-6>
+          <button ion-button  color="danger" round (click)="deleteAppData()" style="border-radius: 12px 0;">Delete App Data</button>
+        </ion-col>
+
+        <ion-col col-md-6>
+          <button ion-button  color="danger" round (click)="deleteResponse()" style="border-radius: 12px 0;">Delete Response</button>
+        </ion-col>
+
+      </ion-col>
+      <ion-col align="center" col-md-12>
+        <button ion-button  color="primary" round (click)="onBack()" style="border-radius: 12px 0;"> Back</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+
+
+
+</ion-content>
