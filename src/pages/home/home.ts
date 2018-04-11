@@ -49,7 +49,7 @@ export class HomePage {
   loadAllEvents(){
     console.log("Loading Events");
     let env = this;
-    this.http.get('http://52.66.132.37/feed_back/Rest/getData', {}).map(res => res.json()).subscribe(data => {
+    this.http.get('http://52.66.132.37/feed_back_app/Rest/getData', {}).map(res => res.json()).subscribe(data => {
       // console.log(data);
       //      loadingPopup.dismiss();
       let data_to_use = data;
@@ -72,17 +72,42 @@ export class HomePage {
           for (let i of event_participants) {
             let participant_details = i.participant_details;
             let participant_questions = i.participant_questions;
+
             console.log("participant_id->" + participant_details.participant_id);
             console.log("participant_name->" + participant_details.participant_name);
             console.log("participant_type->" + participant_details.participant_type);
-            env.dbProvider.addParticipants(event_Id, participant_details.participant_id, participant_details.participant_name, participant_details.participant_type);
-            for (let participant_question of participant_questions) {
-              let question_id = participant_question.question_id;
-              let question = participant_question.question;
-              let options = participant_question.options;
-              let questionType = participant_question.question_type;
-              env.dbProvider.addQuestions(event_Id, participant_details.participant_id, question_id, question, options,questionType)
+            if(participant_details.participant_name == 'Coparts')
+            {
+              let member_id;
+              let group_member = i.group_members;
+              for( let group of group_member)
+              {
+                let participant_group_member_name = group.participant_group_member_name;
+                member_id = group.member_id;
+                console.log( "member_id-> "+ member_id + "participant_group_member_name-> " + participant_group_member_name );
+
+                env.dbProvider.addParticipants(event_Id,participant_details.participant_id, member_id, participant_group_member_name, participant_details.participant_type);
+                }
+              for (let participant_question of participant_questions) {
+                let question_id = participant_question.question_id;
+                let question = participant_question.question;
+                let options = participant_question.options;
+                let questionType = participant_question.question_type;
+                env.dbProvider.addQuestions(event_Id, participant_details.participant_id, question_id, question, options,questionType)
+              }
             }
+            else {
+              env.dbProvider.addParticipants(event_Id, participant_details.participant_id,participant_details.participant_id, participant_details.participant_name, participant_details.participant_type);
+              for (let participant_question of participant_questions) {
+                let question_id = participant_question.question_id;
+                let question = participant_question.question;
+                let options = participant_question.options;
+                let questionType = participant_question.question_type;
+                env.dbProvider.addQuestions(event_Id, participant_details.participant_id, question_id, question, options,questionType)
+              }
+            }
+
+
           }
         }
       }

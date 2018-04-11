@@ -79,10 +79,12 @@ export class DatabaseProvider {
     });
   }
 
-  addParticipants(Event_ID,PARTICIPANTS_ID,PARTICIPANTS_NAME,PARTICIPANTS_TYPE) {
-    let sum:number = Event_ID + PARTICIPANTS_ID;
-    let data = [Event_ID,PARTICIPANTS_ID,PARTICIPANTS_NAME,PARTICIPANTS_TYPE,sum];
-    return this.database.executeSql("INSERT INTO PARTICIPANTS_TABLE (Event_ID,PARTICIPANTS_ID,PARTICIPANTS_NAME,PARTICIPANTS_TYPE,PARTICIPANTS_ID_CONSTRAINT) VALUES (?, ?, ?, ?, ? )", data).then(data => {
+  addParticipants(Event_ID,PARTICIPANTS_ID,MEMBER_ID,PARTICIPANTS_NAME,PARTICIPANTS_TYPE) {
+    // let participantId:number = PARTICIPANTS_ID;
+    // let eventId:number = Event_ID;
+    let sum:number = Event_ID + PARTICIPANTS_ID + MEMBER_ID;
+    let data = [Event_ID,PARTICIPANTS_ID,MEMBER_ID,PARTICIPANTS_NAME,PARTICIPANTS_TYPE,sum];
+    return this.database.executeSql("INSERT INTO PARTICIPANTS_TABLE (Event_ID,PARTICIPANTS_ID,MEMBER_ID,PARTICIPANTS_NAME,PARTICIPANTS_TYPE,PARTICIPANTS_ID_CONSTRAINT) VALUES (?,?, ?, ?, ?, ? )", data).then(data => {
       return data;
     }, err => {
       console.log('Error: ', err);
@@ -121,7 +123,7 @@ export class DatabaseProvider {
   }
 
   getParticipants(eventId) {
-    return this.database.executeSql("SELECT * FROM PARTICIPANTS_TABLE WHERE EVENT_ID = ? AND PARTICIPANTS_TYPE = 'individual'", [eventId]).then((data) => {
+    return this.database.executeSql("SELECT * FROM PARTICIPANTS_TABLE WHERE EVENT_ID = ? AND PARTICIPANTS_TYPE = 'Individual'", [eventId]).then((data) => {
       let developers = [];
 
       if (data.rows.length > 0) {
@@ -142,7 +144,7 @@ export class DatabaseProvider {
   }
 
   getParticipantsCoparts(eventId) {
-    return this.database.executeSql("SELECT * FROM PARTICIPANTS_TABLE WHERE EVENT_ID = ? AND PARTICIPANTS_TYPE = 'coparts'", [eventId]).then((data) => {
+    return this.database.executeSql("SELECT * FROM PARTICIPANTS_TABLE WHERE EVENT_ID = ? AND PARTICIPANTS_TYPE = 'Group'", [eventId]).then((data) => {
       let developers = [];
 
       if (data.rows.length > 0) {
@@ -150,6 +152,7 @@ export class DatabaseProvider {
           developers.push({
             Event_ID: data.rows.item(i).Event_ID,
             PARTICIPANTS_ID: data.rows.item(i).PARTICIPANTS_ID,
+            MEMBER_ID: data.rows.item(i).MEMBER_ID,
             PARTICIPANTS_NAME: data.rows.item(i).PARTICIPANTS_NAME,
             PARTICIPANTS_TYPE: data.rows.item(i).PARTICIPANTS_TYPE,
           });
@@ -229,46 +232,46 @@ export class DatabaseProvider {
     });
   }
 
-  getLocation() {
-    let location;
-    return this.database.executeSql("SELECT * FROM location", []).then((data) => {
-      let developers = [];
-      if (data.rows.length > 0) {
-        location = data.rows.item(0).location
-        // for (var i = 0; i < data.rows.length; i++) {
-        //   developers.push({
-        //     location: data.rows.item(i).location,
-        //   });
-        // }
-      }
-      return location;
-    }, err => {
-      console.log('Error: ', err);
-      return [];
-    });
-  }
+  // getLocation() {
+  //   let location;
+  //   return this.database.executeSql("SELECT * FROM location", []).then((data) => {
+  //     let developers = [];
+  //     if (data.rows.length > 0) {
+  //       location = data.rows.item(0).location
+  //       // for (var i = 0; i < data.rows.length; i++) {
+  //       //   developers.push({
+  //       //     location: data.rows.item(i).location,
+  //       //   });
+  //       // }
+  //     }
+  //     return location;
+  //   }, err => {
+  //     console.log('Error: ', err);
+  //     return [];
+  //   });
+  // }
 
 
 
-  getAllUnSync() {
-    return this.database.executeSql("SELECT * FROM people WHERE sync=1", []).then((data) => {
-      let developers = [];
-      if (data.rows.length > 0) {
-        for (var i = 0; i < data.rows.length; i++) {
-          developers.push({
-            firstname: data.rows.item(i).firstname,
-            lastname: data.rows.item(i).lastname,
-            phonenumber: data.rows.item(i).phonenumber,
-            email: data.rows.item(i).email
-          });
-        }
-      }
-      return developers;
-    }, err => {
-      console.log('Error: ', err);
-      return [];
-    });
-  }
+  // getAllUnSync() {
+  //   return this.database.executeSql("SELECT * FROM people WHERE sync=1", []).then((data) => {
+  //     let developers = [];
+  //     if (data.rows.length > 0) {
+  //       for (var i = 0; i < data.rows.length; i++) {
+  //         developers.push({
+  //           firstname: data.rows.item(i).firstname,
+  //           lastname: data.rows.item(i).lastname,
+  //           phonenumber: data.rows.item(i).phonenumber,
+  //           email: data.rows.item(i).email
+  //         });
+  //       }
+  //     }
+  //     return developers;
+  //   }, err => {
+  //     console.log('Error: ', err);
+  //     return [];
+  //   });
+  // }
 
   getAllResponse(){
     return this.database.executeSql("SELECT * FROM RESPONSE_TABLE ", []).then((data) => {

@@ -56,7 +56,7 @@ export class ThankyouPage {
       body.append('response', response);
       let headers = new Headers();
       let options = {headers: headers};
-      this.http.post('http://52.66.132.37/feed_back/Rest/insertresponses/', body).subscribe(data => {
+      this.http.post('http://52.66.132.37/feed_back_app/Rest/insertresponses/', body).subscribe(data => {
         console.log(data);
         //      loadingPopup.dismiss();
         let data_to_use = data.json();

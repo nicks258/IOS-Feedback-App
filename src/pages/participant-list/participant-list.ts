@@ -104,7 +104,8 @@ export class ParticipantListPage {
   loadQuestionsforCoparts(){
     let env = this;
     let questionsArray = [];
-    let copartId = env.copartsParticipantsNames[0].PARTICIPANTS_ID;
+    let length = env.copartsParticipantsNames.length;
+    let copartId = env.copartsParticipantsNames[length-1].PARTICIPANTS_ID;
     env.dbProvider.getAllQuestionsForCoparts(copartId,this.eventId).then(data=>{
 
       for(let dev of data)
@@ -122,7 +123,7 @@ export class ParticipantListPage {
         });
       }
 
-      console.log("Ready for next Page");
+      console.log("Ready for next Page->"+ questionsArray);
       env.navCtrl.push(QuestionsTablePage,{questions:JSON.stringify(questionsArray),selectedType:"co_parts"},{});
     }).catch(error=>{
       console.log("Home.ts error->" + error)
