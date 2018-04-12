@@ -181,14 +181,16 @@ export class QuestionsTablePage {
       this.navCtrl.push(ThankyouPage, {
         response: JSON.stringify(this.responseArray),
         eventId: this.eventId,
-        paticipantId: this.participantId
+        paticipantId: this.participantId,
+        selectedType:this.selectedType
       });
     }
     else {
-      this.navCtrl.push(CopartsListPage,{
+      this.navCtrl.push(ThankyouPage,{
         response: JSON.stringify(this.responseArray),
         eventId: this.eventId,
-        paticipantId: this.participantId
+        paticipantId: this.participantId,
+        selectedType:this.selectedType
       });
     }
 

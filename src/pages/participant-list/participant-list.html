@@ -29,8 +29,9 @@
                     (click)="loadQuestions(participants.PARTICIPANTS_ID)">{{participants.PARTICIPANTS_NAME}}</button>
           </ion-col>
           <ion-col style="margin-bottom: 5px;" col-md-6>
-            <button *ngIf="isCopart == 'true'" ion-button block  class="button_submit"
+            <button (press)="longPressEvent($event)" *ngIf="isCopart == 'true'" ion-button block  class="button_submit"
                     (click)="loadQuestionsforCoparts()">CO-PARTS</button>
+
           </ion-col>
         </ion-row>
       </ion-col>

@@ -4,7 +4,9 @@ import {Http} from "@angular/http";
 import {DatabaseProvider} from "../../providers/database/database";
 import {QuestionsTablePage} from "../questions-table/questions-table";
 import {HomePage} from "../home/home";
-
+import {Directive, ElementRef, OnInit, OnDestroy, Output, EventEmitter} from '@angular/core';
+import {Gesture} from 'ionic-angular/gestures/gesture';
+import {CopartsListPage} from "../coparts-list/coparts-list";
 /**
  * Generated class for the ParticipantListPage page.
  *
@@ -17,14 +19,18 @@ import {HomePage} from "../home/home";
   selector: 'page-participant-list',
   templateUrl: 'participant-list.html',
 })
-export class ParticipantListPage {
+export class ParticipantListPage{
+  @Output()
+  longPress:EventEmitter<any>;
   loadingPopup;
   eventId;
+
   isCopart;
   participantsNames:any[] = [];
   copartsParticipantsNames:any[] = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,public http:Http,
               public loadingCtrl:LoadingController,public dbProvider:DatabaseProvider) {
+
     let env = this;
     // env.loadingPopup = env.loadingCtrl.create({
     //   content: "Fetching Events...",
@@ -36,6 +42,7 @@ export class ParticipantListPage {
     console.log("isCopart->" + this.isCopart);
     env.loadPaticipantList(this.eventId);
   }
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ParticipantListPage');
@@ -133,6 +140,11 @@ export class ParticipantListPage {
 
   homePage(){
   this.navCtrl.push(HomePage);
+  }
+
+  longPressEvent($event) {
+    this.navCtrl.push(CopartsListPage,{requestComeFromePage:'participantsPage',eventId:this.eventId,eventCopart:this.isCopart},{});
+
   }
 }
 

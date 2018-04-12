@@ -155,6 +155,7 @@ export class DatabaseProvider {
             MEMBER_ID: data.rows.item(i).MEMBER_ID,
             PARTICIPANTS_NAME: data.rows.item(i).PARTICIPANTS_NAME,
             PARTICIPANTS_TYPE: data.rows.item(i).PARTICIPANTS_TYPE,
+            PARTICIPANTS_ID_CONSTRAINT: data.rows.item(i).PARTICIPANTS_ID_CONSTRAINT,
           });
         }
       }
@@ -320,6 +321,15 @@ export class DatabaseProvider {
 
   deleteResponseData(){
     return this.database.executeSql("DELETE FROM RESPONSE_TABLE ",[]).then(data => {
+      return data;
+    }, err => {
+      console.log('Error: ', err);
+      return err;
+    });
+  }
+
+  deleteCoPart(id){
+    return this.database.executeSql("DELETE FROM 'PARTICIPANTS_TABLE' WHERE PARTICIPANTS_ID_CONSTRAINT = ? ",[id]).then(data => {
       return data;
     }, err => {
       console.log('Error: ', err);

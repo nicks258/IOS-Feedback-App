@@ -3,6 +3,7 @@ import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angu
 import {HomePage} from "../home/home";
 import {Http} from "@angular/http";
 import {DatabaseProvider} from "../../providers/database/database";
+import {CopartsListPage} from "../coparts-list/coparts-list";
 
 /**
  * Generated class for the ThankyouPage page.
@@ -19,6 +20,7 @@ import {DatabaseProvider} from "../../providers/database/database";
 export class ThankyouPage {
   responseArray:any[] = [];
   eventId;
+  selectedType;
   loadingPopup;
   participantId;
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public http: Http,
@@ -28,20 +30,11 @@ export class ThankyouPage {
       content: "Saving your response...",
       spinner: 'circles'
     });
-    env.loadingPopup.present();
+
     env.responseArray = JSON.parse(env.navParams.get('response'));
     env.eventId = env.navParams.get('eventId');
     env.participantId = env.navParams.get('paticipantId');
-    for(let response of env.responseArray){
-      env.dbProvider.addResponse(env.eventId,env.participantId,response.QUESTION_ID,response.RESPONSE);
-      console.log(env.eventId+" => "+env.participantId +" -> " +response.QUESTION_ID + " ->" + response.RESPONSE);
-      env.sendDetailsToServer(env.eventId,env.participantId,response.QUESTION_ID,response.RESPONSE);
-    }
-
-    setTimeout(function () {
-      env.navCtrl.push(HomePage);
-      env.loadingPopup.dismiss();
-    },3000)
+    env.selectedType = env.navParams.get('selectedType');
   }
 
   ionViewDidLoad() {
@@ -65,5 +58,29 @@ export class ThankyouPage {
         //        loadingPopup.dismiss();
         console.log("error->" + error2);
       });
+  }
+
+  nextPage(){
+    let env = this;
+    env.loadingPopup.present();
+    if(this.selectedType == 'individual'){
+        for(let response of env.responseArray){
+          env.dbProvider.addResponse(env.eventId,env.participantId,response.QUESTION_ID,response.RESPONSE);
+          console.log(env.eventId+" => "+env.participantId +" -> " +response.QUESTION_ID + " ->" + response.RESPONSE);
+          env.sendDetailsToServer(env.eventId,env.participantId,response.QUESTION_ID,response.RESPONSE);
+        }
+      setTimeout(function () {
+        env.navCtrl.push(HomePage);
+        env.loadingPopup.dismiss();
+      },3000)
+    }
+    else {
+      env.loadingPopup.dismiss();
+      env.navCtrl.push(CopartsListPage,{
+        response: JSON.stringify(this.responseArray),
+        eventId: this.eventId,
+        paticipantId: this.participantId
+      });
+    }
   }
 }

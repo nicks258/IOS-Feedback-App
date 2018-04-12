@@ -80,4 +80,24 @@ page-coparts-list {
     margin: 0;
     padding: 0;
   }
+
+  .checkbox-icon
+  {
+    border-radius: 0!important;
+    border-color: #ffffff!important;
+    background-color: rgb(0,144,215)!important;
+    border-width: 2px!important;
+  }
+  .checkbox-inner
+  {
+    border-width: 2px!important;
+    border-top-width: 0!important;
+    border-left-width: 0!important;
+  }
+
+  .checkbox-checked
+  {
+    border-color: #ffffff!important;
+    background-color: rgb(0,144,215)!important;
+  }
 }
