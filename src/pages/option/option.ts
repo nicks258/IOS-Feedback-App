@@ -162,4 +162,8 @@ export class OptionPage {
     this.navCtrl.push(HomePage)
   }
 
+  selectEvent(){
+    this.navCtrl.push(HomePage,{source:true},{});
+  }
+
 }

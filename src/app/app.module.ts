@@ -22,6 +22,7 @@ import {AuthPage} from "../pages/auth/auth";
 import {OptionsPage} from "../pages/options/options";
 import {AuthPageModule} from "../pages/auth/auth.module";
 import {CopartsListPage} from "../pages/coparts-list/coparts-list";
+import {ViewRecordsPage} from "../pages/view-records/view-records";
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {CopartsListPage} from "../pages/coparts-list/coparts-list";
     OptionsPage,
     CopartsListPage,
     ThankyouPage,
+    ViewRecordsPage,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +56,7 @@ import {CopartsListPage} from "../pages/coparts-list/coparts-list";
     OptionsPage,
     AuthPage,
     OptionPage,
+    ViewRecordsPage,
     QuestionsTablePage,
     ThankyouPage,
   ],

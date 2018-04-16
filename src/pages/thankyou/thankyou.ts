@@ -65,8 +65,8 @@ export class ThankyouPage {
     env.loadingPopup.present();
     if(this.selectedType == 'individual'){
         for(let response of env.responseArray){
-          env.dbProvider.addResponse(env.eventId,env.participantId,response.QUESTION_ID,response.RESPONSE);
-          console.log(env.eventId+" => "+env.participantId +" -> " +response.QUESTION_ID + " ->" + response.RESPONSE);
+          env.dbProvider.addResponse(env.eventId,env.participantId,response.QUESTION_ID,response.QUESTION,response.RESPONSE);
+          console.log(env.eventId+" => "+env.participantId +" -> " +response.QUESTION_ID +" -> "+ response.QUESTION +" -> " + response.RESPONSE);
           env.sendDetailsToServer(env.eventId,env.participantId,response.QUESTION_ID,response.RESPONSE);
         }
       setTimeout(function () {

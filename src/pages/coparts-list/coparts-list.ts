@@ -76,7 +76,7 @@ export class CopartsListPage {
     else {
       env.loadingPopup.present();
       for(let response of env.responseArray){
-        env.dbProvider.addResponse(env.eventId,env.participantId,response.QUESTION_ID,response.RESPONSE);
+        env.dbProvider.addResponse(env.eventId,env.participantId,response.QUESTION_ID,response.QUESTION,response.RESPONSE);
         console.log(env.eventId+" => "+env.participantId +" -> " +response.QUESTION_ID + " ->" + response.RESPONSE);
         env.sendDetailsToServer(env.eventId,env.participantId,response.QUESTION_ID,response.RESPONSE);
       }

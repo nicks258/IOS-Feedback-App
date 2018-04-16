@@ -149,6 +149,7 @@ export class QuestionsTablePage {
       env.selectedMultiple = responseString;
       this.responseArray[this.i] = {
         QUESTION_ID: this.questionId,
+        QUESTION:  this.questionsValue,
         RESPONSE: this.selectedMultiple,
       };
     }
@@ -157,6 +158,7 @@ export class QuestionsTablePage {
       console.log("I am in else single");
       this.responseArray[this.i] = {
         QUESTION_ID: this.questionId,
+        QUESTION:  this.questionsValue,
         RESPONSE: this.selectedOptionsFinal,
       };
     }
@@ -165,6 +167,7 @@ export class QuestionsTablePage {
       console.log("I am in else rating");
       this.responseArray[this.i] = {
         QUESTION_ID: this.questionId,
+        QUESTION:  this.questionsValue,
         RESPONSE: this.selectedRating,
       };
     }
@@ -173,6 +176,7 @@ export class QuestionsTablePage {
       console.log("suggestion_text-> " + this.suggestion_text);
       this.responseArray[this.i] = {
         QUESTION_ID: this.questionId,
+        QUESTION:  this.questionsValue,
         RESPONSE: this.suggestion_text,
       };
     }
@@ -214,6 +218,7 @@ export class QuestionsTablePage {
         this.selectedMultiple = this.responseArray[this.i].RESPONSE;
         this.responseArray[this.i] = {
           QUESTION_ID: this.questionId,
+          QUESTION:  this.questionsValue,
           RESPONSE: this.selectedMultiple,
         };
       }
@@ -226,6 +231,7 @@ export class QuestionsTablePage {
         env.selectedMultiple = responseString;
         this.responseArray[this.i] = {
           QUESTION_ID: this.questionId,
+          QUESTION:  this.questionsValue,
           RESPONSE: this.selectedMultiple,
         };
       }
@@ -238,6 +244,7 @@ export class QuestionsTablePage {
           this.selectedOptionsFinal = this.responseArray[this.i].RESPONSE;
           this.responseArray[this.i] = {
             QUESTION_ID: this.questionId,
+            QUESTION:  this.questionsValue,
             RESPONSE: this.selectedOptionsFinal,
           };
         }
@@ -246,6 +253,7 @@ export class QuestionsTablePage {
         console.log("I am in else single");
         this.responseArray[this.i] = {
           QUESTION_ID: this.questionId,
+          QUESTION:  this.questionsValue,
           RESPONSE: this.selectedOptionsFinal,
         };
       }
@@ -259,6 +267,7 @@ export class QuestionsTablePage {
           this.selectedRating = this.responseArray[this.i].RESPONSE;
           this.responseArray[this.i] = {
             QUESTION_ID: this.questionId,
+            QUESTION:  this.questionsValue,
             RESPONSE: this.selectedRating,
           };
         }
@@ -267,6 +276,7 @@ export class QuestionsTablePage {
         console.log("I am in else rating");
         this.responseArray[this.i] = {
           QUESTION_ID: this.questionId,
+          QUESTION:  this.questionsValue,
           RESPONSE: this.selectedRating,
         };
       }
@@ -280,6 +290,7 @@ export class QuestionsTablePage {
         this.suggestion_text = this.responseArray[this.i].RESPONSE;
         this.responseArray[this.i] = {
           QUESTION_ID: this.questionId,
+          QUESTION:  this.questionsValue,
           RESPONSE: this.suggestion_text,
         };
       }
@@ -287,6 +298,7 @@ export class QuestionsTablePage {
         console.log("suggestion_text-> " + this.suggestion_text);
         this.responseArray[this.i] = {
           QUESTION_ID: this.questionId,
+          QUESTION:  this.questionsValue,
           RESPONSE: this.suggestion_text,
         };
       }
@@ -320,6 +332,7 @@ export class QuestionsTablePage {
         this.selectedMultiple = this.responseArray[this.i].RESPONSE;
         this.responseArray[this.i] = {
           QUESTION_ID: this.questionId,
+          QUESTION:  this.questionsValue,
           RESPONSE: this.selectedMultiple,
         };
       }
@@ -332,6 +345,7 @@ export class QuestionsTablePage {
         env.selectedMultiple = responseString;
         this.responseArray[this.i] = {
           QUESTION_ID: this.questionId,
+          QUESTION:  this.questionsValue,
           RESPONSE: this.selectedMultiple,
         };
       }
@@ -342,6 +356,7 @@ export class QuestionsTablePage {
         this.selectedOptionsFinal = this.responseArray[this.i].RESPONSE;
         this.responseArray[this.i] = {
           QUESTION_ID: this.questionId,
+          QUESTION:  this.questionsValue,
           RESPONSE: this.selectedOptionsFinal,
         };
       }
@@ -349,6 +364,7 @@ export class QuestionsTablePage {
         console.log("I am in else single");
         this.responseArray[this.i] = {
           QUESTION_ID: this.questionId,
+          QUESTION:  this.questionsValue,
           RESPONSE: this.selectedOptionsFinal,
         };
       }
@@ -360,6 +376,7 @@ export class QuestionsTablePage {
         this.suggestion_text = this.responseArray[this.i].RESPONSE;
         this.responseArray[this.i] = {
           QUESTION_ID: this.questionId,
+          QUESTION:  this.questionsValue,
           RESPONSE: this.suggestion_text,
         };
       }
@@ -367,6 +384,7 @@ export class QuestionsTablePage {
         console.log("suggestion_text-> " + this.suggestion_text);
         this.responseArray[this.i] = {
           QUESTION_ID: this.questionId,
+          QUESTION:  this.questionsValue,
           RESPONSE: this.suggestion_text,
         };
       }
@@ -379,6 +397,7 @@ export class QuestionsTablePage {
           this.selectedRating = this.responseArray[this.i].RESPONSE;
           this.responseArray[this.i] = {
             QUESTION_ID: this.questionId,
+            QUESTION:  this.questionsValue,
             RESPONSE: this.selectedRating,
           };
         }
@@ -387,6 +406,7 @@ export class QuestionsTablePage {
         console.log("I am in else rating");
         this.responseArray[this.i] = {
           QUESTION_ID: this.questionId,
+          QUESTION:  this.questionsValue,
           RESPONSE: this.selectedRating,
         };
       }

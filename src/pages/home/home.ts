@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import {LoadingController, NavController, Platform} from 'ionic-angular';
+import {LoadingController, NavController, NavParams, Platform} from 'ionic-angular';
 import {DatabaseProvider} from "../../providers/database/database";
 import {QuestionsTablePage} from "../questions-table/questions-table";
 import {Http} from "@angular/http";
 import {ParticipantListPage} from "../participant-list/participant-list";
 import {OptionPage} from "../option/option";
 import {OptionsPage} from "../options/options";
+import {ViewRecordsPage} from "../view-records/view-records";
 
 @Component({
   selector: 'page-home',
@@ -17,16 +18,18 @@ export class HomePage {
   developers:any[] = [];
   options:any[] = [];
   list:any;
+  source:boolean = false;
   crm_key = [];
   crm_val = [];
   questionsArray = [];
   loadingPopup;
   questions;
   i;
-  constructor(public navCtrl: NavController,public dbProvider:DatabaseProvider,public platform:Platform,
+  constructor(public navCtrl: NavController,public navParam : NavParams,public dbProvider:DatabaseProvider,public platform:Platform,
               public http:Http,public loadingCtrl:LoadingController ) {
-    console.log("Constructer");
+
     let env = this;
+    this.source =  env.navParam.get('source');
     platform.ready().then(data=>{
       env.loadingPopup = env.loadingCtrl.create({
         content: "Fetching Events...",
@@ -159,18 +162,37 @@ export class HomePage {
     // this.navCtrl.push(QuestionsTablePage);
     let env = this;
     let eventId;
+    let eventName;
     let isCopart;
-    env.dbProvider.getEventId(env.eventName).then(data=>{
+
+    if(this.source)
+    {
+      env.dbProvider.getEventId(env.eventName).then(data=>{
         for(let dev of data)
         {
           eventId = dev.Event_ID;
           isCopart = dev.IS_COPARTS;
         }
-      console.log("eventId=>" + eventId + "isCopart=>" + isCopart );
-      env.navCtrl.push(ParticipantListPage,{eventId:eventId,eventCopart:isCopart},{});
-    }).catch(error=>{
+        // console.log("eventId=>" + eventId + "isCopart=>" + isCopart );
+        env.navCtrl.push(ViewRecordsPage,{eventName:this.eventName,eventId:eventId,eventCopart:isCopart},{});
+      }).catch(error=>{
         console.log("Error");
-    })
+      });
+
+    }
+    else {
+      env.dbProvider.getEventId(env.eventName).then(data=>{
+        for(let dev of data)
+        {
+          eventId = dev.Event_ID;
+          isCopart = dev.IS_COPARTS;
+        }
+        console.log("eventId=>" + eventId + "isCopart=>" + isCopart );
+        env.navCtrl.push(ParticipantListPage,{eventId:eventId,eventCopart:isCopart},{});
+      }).catch(error=>{
+        console.log("Error");
+      })
+    }
   }
   optionsPage(){
     this.navCtrl.push(OptionPage);
