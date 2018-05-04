@@ -4,7 +4,10 @@ import {DatabaseProvider} from "../../providers/database/database";
 import {ThankyouPage} from "../thankyou/thankyou";
 import {HomePage} from "../home/home";
 import {Http} from "@angular/http";
+import { Device } from '@ionic-native/device';
 import {ParticipantListPage} from "../participant-list/participant-list";
+import {Storage} from "@ionic/storage";
+import {RemoteServiceProvider} from "../../providers/remote-service/remote-service";
 
 /**
  * Generated class for the CopartsListPage page.
@@ -25,19 +28,30 @@ export class CopartsListPage {
   selectedOption;
   answers = [];
   loadingPopup;
+  feedbackId:number;
   isCheckbox:boolean = false;
   isCopart;
+  url;
+  testing;
   participantUniqueId;
   requestComeFromePage;
   participantId;
   constructor(public navCtrl: NavController, public navParams: NavParams,public dbProvider:DatabaseProvider,
-              public loadingCtrl:LoadingController,public http: Http ) {
+              public loadingCtrl:LoadingController,public http: Http,public device: Device,private storage: Storage,
+              public remote:RemoteServiceProvider) {
     let env = this;
     env.loadingPopup = env.loadingCtrl.create({
       content: "Saving your response...",
       spinner: 'circles'
     });
-     env.requestComeFromePage =  env.navParams.get('requestComeFromePage');
+    env.url = remote.baseUrl;
+    env.requestComeFromePage =  env.navParams.get('requestComeFromePage');
+    env.feedbackId = env.navParams.get('FEEDBACK_ID');
+    env.storage.get('testing').then(data=>{
+      env.testing  = data;
+    }).catch(error=>{
+      env.testing = false;
+    });
     // env.loadingPopup.present();
     if(env.requestComeFromePage == 'participantsPage')
     {
@@ -46,6 +60,7 @@ export class CopartsListPage {
       this.isCheckbox = true;
     }
     else {
+      this.isCopart = env.navParams.get('isCopart');
       env.participantId = env.navParams.get('paticipantId');
       env.responseArray = JSON.parse(env.navParams.get('response'));
     }
@@ -75,15 +90,26 @@ export class CopartsListPage {
     }
     else {
       env.loadingPopup.present();
+      let device_id = this.device.uuid;
       for(let response of env.responseArray){
-        env.dbProvider.addResponse(env.eventId,env.participantId,response.QUESTION_ID,response.QUESTION,response.RESPONSE);
-        console.log(env.eventId+" => "+env.participantId +" -> " +response.QUESTION_ID + " ->" + response.RESPONSE);
-        env.sendDetailsToServer(env.eventId,env.participantId,response.QUESTION_ID,response.RESPONSE);
+        let timestamp = new Date().getTime() + this.device.uuid;
+        // console.log(env.eventId+" => "+env.participantId +" -> " +response.QUESTION_ID + " ->" + response.RESPONSE);
+        // console.log("value->" + env.sendDetailsToServer(env.eventId,env.participantId,response.QUESTION_ID,response.RESPONSE,timestamp));
+        env.sendDetailsToServer(env.eventId,env.participantId,response.QUESTION_ID,response.RESPONSE,timestamp,device_id,this.testing);
+        env.dbProvider.addResponse(env.eventId,env.participantId,response.QUESTION_ID,response.QUESTION,response.RESPONSE,timestamp,env.feedbackId,device_id,this.testing);
+        // if(){
+        //
+        // }
+        // else {
+        //   env.dbProvider.addResponse(env.eventId,env.participantId,response.QUESTION_ID,response.QUESTION,response.RESPONSE,timestamp);
+        // }
       }
       env.dbProvider.deleteCoPart(env.participantUniqueId).then(data=>{
         setTimeout(function () {
-          env.loadingPopup.dismiss();
-          env.navCtrl.push(HomePage);
+          env.storage.set('feedbackId',env.feedbackId).then(data=>{
+            env.navCtrl.push(ParticipantListPage,{eventId:env.eventId,eventCopart:env.isCopart,FEEDBACK_ID:this.feedbackId});
+            env.loadingPopup.dismiss();
+          });
         },3000);
       })
     }
@@ -99,22 +125,29 @@ export class CopartsListPage {
     this.navCtrl.push(HomePage);
   }
 
-  sendDetailsToServer(eventId,participantId,questionId,response) {
+  sendDetailsToServer(eventId,participantId,questionId,response,timestamp,ipad_id,testing)  {
     let body = new FormData();
+    let env = this;
     body.append('event_id', eventId);
     body.append('participant_id',participantId);
     body.append('question_id', questionId);
     body.append('response', response);
+    body.append('timestamp',timestamp);
+    body.append('testing',testing);
+    body.append('feedback_id',""+env.feedbackId);
+    body.append('ipad_id',ipad_id);
     let headers = new Headers();
     let options = {headers: headers};
-    this.http.post('http://52.66.132.37/feed_back_app/Rest/insertresponses/', body).subscribe(data => {
+    this.http.post(this.url + 'insertresponses/', body).subscribe(data => {
       console.log(data);
       //      loadingPopup.dismiss();
       let data_to_use = data.json();
       console.log(data_to_use);
+      return true;
     }, error2 => {
       //        loadingPopup.dismiss();
       console.log("error->" + error2);
+      return false;
     });
   }
 

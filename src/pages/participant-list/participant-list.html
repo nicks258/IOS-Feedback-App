@@ -19,9 +19,9 @@
 
   <ion-grid style="margin-top: 20%;">
     <ion-row>
-      <ion-col col-md-2>
+      <ion-col col-md-1>
       </ion-col>
-      <ion-col col-md-8>
+      <ion-col col-md-10>
         <ion-row>
 
           <ion-col col-md-6 *ngFor="let participants of participantsNames">
@@ -29,13 +29,15 @@
                     (click)="loadQuestions(participants.PARTICIPANTS_ID)">{{participants.PARTICIPANTS_NAME}}</button>
           </ion-col>
           <ion-col style="margin-bottom: 5px;" col-md-6>
-            <button (press)="longPressEvent($event)" *ngIf="isCopart == 'true'" ion-button block  class="button_submit"
-                    (click)="loadQuestionsforCoparts()">CO-PARTS</button>
+            <button (press)="longPressEvent($event)" *ngIf="isCopart == 'true' && participantGroup != 'Survey has been completed with all coparts'" ion-button block  class="button_submit"
+                    (click)="loadQuestionsforCoparts()">{{participantGroup}}</button>
+            <button style="text-align: justify;" [disabled]=true (press)="longPressEvent($event)" *ngIf="isCopart == 'true' && participantGroup == 'Survey has been completed with all coparts'" ion-button block  class="button_submit"
+                    (click)="loadQuestionsforCoparts()">{{participantGroup}}</button>
 
           </ion-col>
         </ion-row>
       </ion-col>
-      <ion-col col-md-2>
+      <ion-col col-md-1>
       </ion-col>
     </ion-row>
     <!--<ion-row>-->

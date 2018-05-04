@@ -7,6 +7,7 @@ import {HomePage} from "../home/home";
 import {Directive, ElementRef, OnInit, OnDestroy, Output, EventEmitter} from '@angular/core';
 import {Gesture} from 'ionic-angular/gestures/gesture';
 import {CopartsListPage} from "../coparts-list/coparts-list";
+import { Storage } from '@ionic/storage';
 /**
  * Generated class for the ParticipantListPage page.
  *
@@ -24,12 +25,13 @@ export class ParticipantListPage{
   longPress:EventEmitter<any>;
   loadingPopup;
   eventId;
-
+  participantGroup ="Survey has been completed with all coparts";
+  feedBackId:number;
   isCopart;
   participantsNames:any[] = [];
   copartsParticipantsNames:any[] = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,public http:Http,
-              public loadingCtrl:LoadingController,public dbProvider:DatabaseProvider) {
+              public loadingCtrl:LoadingController,public dbProvider:DatabaseProvider,private storage: Storage) {
 
     let env = this;
     // env.loadingPopup = env.loadingCtrl.create({
@@ -37,6 +39,14 @@ export class ParticipantListPage{
     //   spinner: 'circles'
     // });
     // env.loadingPopup.present();
+    storage.get('feedbackId').then(val=>{
+      this.feedBackId = val;
+      this.feedBackId++;
+      console.log("id->>>." + this.feedBackId)
+    }).catch(error=>{
+      console.log(error);
+      this.feedBackId = 0;
+    });
     this.eventId = env.navParams.get("eventId");
     this.isCopart = env.navParams.get("eventCopart");
     console.log("isCopart->" + this.isCopart);
@@ -69,9 +79,11 @@ export class ParticipantListPage{
       for(let copartParticipants of coparts) {
         env.copartsParticipantsNames.push({
           PARTICIPANTS_NAME : copartParticipants.PARTICIPANTS_NAME,
-          PARTICIPANTS_ID : copartParticipants.PARTICIPANTS_ID,
+          PARTICIPANTS_ID   : copartParticipants.PARTICIPANTS_ID,
+          PARTICIPANTS_GROUP_NAME : copartParticipants.PARTICIPANTS_GROUP_NAME,
         });
         console.log(copartParticipants.PARTICIPANTS_NAME);
+        this.participantGroup = copartParticipants.PARTICIPANTS_GROUP_NAME;
       }
     }).catch(error=>{
       console.log("Error loadCoparts PaticipantList");
@@ -98,11 +110,12 @@ export class ParticipantListPage{
           QUESTIONS: dev.QUESTIONS,
           OPTIONS: dev.OPTIONS,
           QUESTION_TYPE: dev.QUESTION_TYPE,
+          FEEDBACK_ID: this.feedBackId,
         });
       }
 
       console.log("Ready for next Page");
-      env.navCtrl.push(QuestionsTablePage,{questions:JSON.stringify(questionsArray),selectedType:"individual"},{});
+      env.navCtrl.push(QuestionsTablePage,{questions:JSON.stringify(questionsArray),selectedType:"individual",isCopart:env.isCopart},{});
     }).catch(error=>{
       console.log("Home.ts error->" + error)
     });
@@ -127,11 +140,13 @@ export class ParticipantListPage{
           QUESTIONS: dev.QUESTIONS,
           OPTIONS: dev.OPTIONS,
           QUESTION_TYPE: dev.QUESTION_TYPE,
+          FEEDBACK_ID: this.feedBackId,
         });
       }
 
       console.log("Ready for next Page->"+ questionsArray);
-      env.navCtrl.push(QuestionsTablePage,{questions:JSON.stringify(questionsArray),selectedType:"co_parts"},{});
+
+      env.navCtrl.push(QuestionsTablePage,{questions:JSON.stringify(questionsArray),selectedType:"co_parts",isCopart:env.isCopart},{});
     }).catch(error=>{
       console.log("Home.ts error->" + error)
     });

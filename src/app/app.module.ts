@@ -3,7 +3,9 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { Printer } from '@ionic-native/printer';
 import { LongPressModule } from 'ionic-long-press';
+import { Network } from '@ionic-native/network';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -19,11 +21,18 @@ import {ParticipantListPage} from "../pages/participant-list/participant-list";
 import {ThankyouPage} from "../pages/thankyou/thankyou";
 import {OptionPage} from "../pages/option/option";
 import {AuthPage} from "../pages/auth/auth";
+import { Screenshot } from '@ionic-native/screenshot';
+import { File } from '@ionic-native/file';
+import { FileOpener } from '@ionic-native/file-opener';
 import {OptionsPage} from "../pages/options/options";
 import {AuthPageModule} from "../pages/auth/auth.module";
 import {CopartsListPage} from "../pages/coparts-list/coparts-list";
+import { Device } from '@ionic-native/device';
+// import {}  from "@ionic-native/core"
 import {ViewRecordsPage} from "../pages/view-records/view-records";
-
+import {ServerChangePage} from "../pages/server-change/server-change";
+import { RemoteServiceProvider } from '../providers/remote-service/remote-service';
+import { HttpClient } from '@angular/common/http';
 @NgModule({
   declarations: [
     MyApp,
@@ -34,6 +43,7 @@ import {ViewRecordsPage} from "../pages/view-records/view-records";
     OptionPage,
     OptionsPage,
     CopartsListPage,
+    ServerChangePage,
     ThankyouPage,
     ViewRecordsPage,
   ],
@@ -55,6 +65,7 @@ import {ViewRecordsPage} from "../pages/view-records/view-records";
     CopartsListPage,
     OptionsPage,
     AuthPage,
+    ServerChangePage,
     OptionPage,
     ViewRecordsPage,
     QuestionsTablePage,
@@ -62,13 +73,21 @@ import {ViewRecordsPage} from "../pages/view-records/view-records";
   ],
   providers: [
     StatusBar,
+    Screenshot,
     SplashScreen,
     HttpModule,
     ScreenOrientation,
     SQLitePorter,
+    Printer,
+    Network,
     SQLite,
+    HttpClient,
+    File,
+    Device,
+    FileOpener,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DatabaseProvider
+    DatabaseProvider,
+    RemoteServiceProvider
   ]
 })
 export class AppModule {}

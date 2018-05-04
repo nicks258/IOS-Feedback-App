@@ -40,11 +40,13 @@ export class QuestionsTablePage {
   questionId;
   checked:boolean = false;
   crm_val = [];
+  isCopart;
   responseArray:any[] =[];
   questionType;
   questionsArrayLength;
   questionsValue;
   selectedOption;
+  feedbackId:number;
   selectedType;
   selectedOptionsFinal;
   selectedOptionPrev;
@@ -56,7 +58,9 @@ export class QuestionsTablePage {
     this.selectedType = this.navParams.get('selectedType');
     this.questionsArrayLength = this.questionsArray.length;
     // alert(this.navParams.get("eventName"));
+    this.isCopart = this.navParams.get('isCopart');
     this.eventId = this.questionsArray[this.questionsArrayLength - 1 - this.i].Event_ID;
+    this.feedbackId = this.questionsArray[this.questionsArrayLength - 1 - this.i].FEEDBACK_ID;
     this.participantId = this.questionsArray[this.questionsArrayLength - 1 - this.i].PARTICIPANTS_ID;
 
     this.loadQuestion();
@@ -107,7 +111,106 @@ export class QuestionsTablePage {
         this.crm_val.push(value);
       }
       if (this.i == this.questionsArrayLength-1){
+        //testing for solving maybe unstable
         this.lastQuestion = true;
+        let env = this;
+        if(this.questionType=="multiple") {
+          if (env.answers.length == 0) {
+
+            this.selectedMultiple = this.responseArray[this.i].RESPONSE;
+            this.responseArray[this.i] = {
+              QUESTION_ID: this.questionId,
+              QUESTION:  this.questionsValue,
+              RESPONSE: this.selectedMultiple,
+            };
+          }
+          else {
+            let responseString: string = "";
+            console.log("its undefined");
+            for (let ans of env.answers) {
+              responseString = ans + "," + responseString;
+            }
+            env.selectedMultiple = responseString;
+            this.responseArray[this.i] = {
+              QUESTION_ID: this.questionId,
+              QUESTION:  this.questionsValue,
+              RESPONSE: this.selectedMultiple,
+            };
+          }
+        }
+        else if(this.questionType=="single") {
+          if (this.selectedOptionsFinal == undefined) {
+            console.log("I am in if");
+            if (this.responseArray.length > 0) {
+              console.log("this.responseArray[this.i].RESPONSE->" + this.responseArray[this.i].RESPONSE);
+              this.selectedOptionsFinal = this.responseArray[this.i].RESPONSE;
+              this.responseArray[this.i] = {
+                QUESTION_ID: this.questionId,
+                QUESTION:  this.questionsValue,
+                RESPONSE: this.selectedOptionsFinal,
+              };
+            }
+          }
+          else {
+            console.log("I am in else single");
+            this.responseArray[this.i] = {
+              QUESTION_ID: this.questionId,
+              QUESTION:  this.questionsValue,
+              RESPONSE: this.selectedOptionsFinal,
+            };
+          }
+        }
+
+        else if(this.questionType=="rating") {
+          if (this.selectedRating == undefined) {
+            console.log("I am in if");
+            if (this.responseArray.length > 0) {
+              console.log("this.responseArray[this.i].RESPONSE->" + this.responseArray[this.i].RESPONSE);
+              this.selectedRating = this.responseArray[this.i].RESPONSE;
+              this.responseArray[this.i] = {
+                QUESTION_ID: this.questionId,
+                QUESTION:  this.questionsValue,
+                RESPONSE: this.selectedRating,
+              };
+            }
+          }
+          else {
+            console.log("I am in else rating");
+            this.responseArray[this.i] = {
+              QUESTION_ID: this.questionId,
+              QUESTION:  this.questionsValue,
+              RESPONSE: this.selectedRating,
+            };
+          }
+        }
+
+
+        else if(this.questionType=="suggestion")
+        {
+          if(this.suggestion_text == undefined)
+          {
+            console.log("I am fucking if suggestion");
+            // this.suggestion_text = this.responseArray[this.i].RESPONSE;
+            this.responseArray[this.i] = {
+              QUESTION_ID: this.questionId,
+              QUESTION:  this.questionsValue,
+              RESPONSE: this.suggestion_text,
+            };
+          }
+          else
+          {
+            console.log("I am fucking else suggestion");
+            console.log("suggestion_text-> " + this.suggestion_text);
+            this.responseArray[this.i] = {
+              QUESTION_ID: this.questionId,
+              QUESTION:  this.questionsValue,
+              RESPONSE: this.suggestion_text,
+            };
+          }
+        }
+
+        //Ending
+
       }
     }
   }
@@ -186,7 +289,9 @@ export class QuestionsTablePage {
         response: JSON.stringify(this.responseArray),
         eventId: this.eventId,
         paticipantId: this.participantId,
-        selectedType:this.selectedType
+        selectedType:this.selectedType,
+        isCopart:this.isCopart,
+        FEEDBACK_ID:this.feedbackId,
       });
     }
     else {
@@ -194,7 +299,9 @@ export class QuestionsTablePage {
         response: JSON.stringify(this.responseArray),
         eventId: this.eventId,
         paticipantId: this.participantId,
-        selectedType:this.selectedType
+        selectedType:this.selectedType,
+        isCopart:this.isCopart,
+        FEEDBACK_ID:this.feedbackId,
       });
     }
 
@@ -208,10 +315,6 @@ export class QuestionsTablePage {
     }
     this.backButtonShow = true;
     let env = this;
-    console.log("Selected->" + env.selectedOptionsFinal);
-    console.log("Selected->" + env.selectedRating);
-    console.log("Selected->" + env.questionType);
-
     if(this.questionType=="multiple") {
       if (env.answers.length == 0) {
 
@@ -287,14 +390,17 @@ export class QuestionsTablePage {
     {
       if(this.suggestion_text == undefined)
       {
-        this.suggestion_text = this.responseArray[this.i].RESPONSE;
+        console.log("I am fucking if suggestion");
+        // this.suggestion_text = this.responseArray[this.i].RESPONSE;
         this.responseArray[this.i] = {
           QUESTION_ID: this.questionId,
           QUESTION:  this.questionsValue,
           RESPONSE: this.suggestion_text,
         };
       }
-      else {
+      else
+        {
+          console.log("I am fucking else suggestion");
         console.log("suggestion_text-> " + this.suggestion_text);
         this.responseArray[this.i] = {
           QUESTION_ID: this.questionId,
@@ -414,6 +520,10 @@ export class QuestionsTablePage {
     }
     this.answers = [];
     this.i--;
+    if(this.i<=0)
+    {
+      this.backButtonShow = false;
+    }
     // this.selectedOption ="";
     this.questions = this.questionsArray[this.questionsArrayLength - 1 - this.i];
     this.questionType = this.questions.QUESTION_TYPE;
@@ -447,10 +557,7 @@ export class QuestionsTablePage {
     }
     console.log("back Button");
     console.log("Prev answer->" + this.selectedOptionPrev);
-    if(this.i<=0)
-    {
-      this.backButtonShow = false;
-    }
+
     for(let response of this.responseArray)
     {
       console.log("RESPONSE->> "+response.RESPONSE);
@@ -537,6 +644,10 @@ export class QuestionsTablePage {
       console.log("I am in outside {}");
       console.log("Prev answer->" + this.selectedOptionPrev);
       this.suggestion_text = this.selectedOptionPrev;
+    }
+    else {
+      this.selectedOptionPrev ="";
+      this.suggestion_text = "";
     }
     this.loadQuestion();
   }

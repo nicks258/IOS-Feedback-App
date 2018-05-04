@@ -18,6 +18,7 @@ export class HomePage {
   developers:any[] = [];
   options:any[] = [];
   list:any;
+  actionName:any;
   source:boolean = false;
   crm_key = [];
   crm_val = [];
@@ -39,9 +40,17 @@ export class HomePage {
       // env.loadAllEvents();
       setTimeout(function () {
         env.loadAllEvents();
-      },5000);
+      },2000);
 
     });
+    if(this.source)
+    {
+      this.actionName = "View Response";
+
+    }
+    else {
+      this.actionName = "Start Feedback";
+    }
 
   }
 

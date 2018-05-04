@@ -58,10 +58,10 @@ export class DatabaseProvider {
     });
   }
 
-  addResponse(Event_ID,PARTICIPANTS_ID,QUESTION_ID,QUESTIONS,RESPONSE) {
+  addResponse(Event_ID,PARTICIPANTS_ID,QUESTION_ID,QUESTIONS,RESPONSE,TIMESTAMP,FEEDBACK_ID,DEVICE_ID,TESTING) {
     // let sum :number = PARTICIPANTS_ID + QUESTION_ID;
-    let data = [Event_ID,PARTICIPANTS_ID,QUESTION_ID,QUESTIONS,RESPONSE];
-    return this.database.executeSql("INSERT INTO RESPONSE_TABLE (Event_ID,PARTICIPANTS_ID,QUESTION_ID,QUESTIONS,RESPONSE) VALUES (?, ? , ?, ?, ?)", data).then(data => {
+    let data = [Event_ID,PARTICIPANTS_ID,QUESTION_ID,QUESTIONS,RESPONSE,TIMESTAMP,FEEDBACK_ID,DEVICE_ID,TESTING];
+    return this.database.executeSql("INSERT INTO RESPONSE_TABLE (Event_ID,PARTICIPANTS_ID,QUESTION_ID,QUESTIONS,RESPONSE,TIMESTAMP,FEEDBACK_ID,DEVICE_ID,TESTING) VALUES (?, ? , ?, ?, ?, ?, ?, ?,?)", data).then(data => {
       return data;
     }, err => {
       console.log('Error: ', err);
@@ -79,12 +79,12 @@ export class DatabaseProvider {
     });
   }
 
-  addParticipants(Event_ID,PARTICIPANTS_ID,MEMBER_ID,PARTICIPANTS_NAME,PARTICIPANTS_TYPE) {
+  addParticipants(Event_ID,PARTICIPANTS_ID,MEMBER_ID,PARTICIPANTS_NAME,PARTICIPANTS_GROUP_NAME,PARTICIPANTS_TYPE) {
     // let participantId:number = PARTICIPANTS_ID;
     // let eventId:number = Event_ID;
     let sum:number = Event_ID + PARTICIPANTS_ID + MEMBER_ID;
-    let data = [Event_ID,PARTICIPANTS_ID,MEMBER_ID,PARTICIPANTS_NAME,PARTICIPANTS_TYPE,sum];
-    return this.database.executeSql("INSERT INTO PARTICIPANTS_TABLE (Event_ID,PARTICIPANTS_ID,MEMBER_ID,PARTICIPANTS_NAME,PARTICIPANTS_TYPE,PARTICIPANTS_ID_CONSTRAINT) VALUES (?,?, ?, ?, ?, ? )", data).then(data => {
+    let data = [Event_ID,PARTICIPANTS_ID,MEMBER_ID,PARTICIPANTS_NAME,PARTICIPANTS_GROUP_NAME,PARTICIPANTS_TYPE,sum];
+    return this.database.executeSql("INSERT INTO PARTICIPANTS_TABLE (Event_ID,PARTICIPANTS_ID,MEMBER_ID,PARTICIPANTS_NAME,PARTICIPANTS_GROUP_NAME,PARTICIPANTS_TYPE,PARTICIPANTS_ID_CONSTRAINT) VALUES (?,?, ?, ? , ?, ?, ? )", data).then(data => {
       return data;
     }, err => {
       console.log('Error: ', err);
@@ -154,6 +154,7 @@ export class DatabaseProvider {
             PARTICIPANTS_ID: data.rows.item(i).PARTICIPANTS_ID,
             MEMBER_ID: data.rows.item(i).MEMBER_ID,
             PARTICIPANTS_NAME: data.rows.item(i).PARTICIPANTS_NAME,
+            PARTICIPANTS_GROUP_NAME: data.rows.item(i).PARTICIPANTS_GROUP_NAME,
             PARTICIPANTS_TYPE: data.rows.item(i).PARTICIPANTS_TYPE,
             PARTICIPANTS_ID_CONSTRAINT: data.rows.item(i).PARTICIPANTS_ID_CONSTRAINT,
           });
@@ -245,7 +246,11 @@ export class DatabaseProvider {
             Event_ID: data.rows.item(i).Event_ID,
             PARTICIPANTS_ID: data.rows.item(i).PARTICIPANTS_ID,
             QUESTION_ID: data.rows.item(i).QUESTION_ID,
-            RESPONSE: data.rows.item(i).RESPONSE
+            RESPONSE: data.rows.item(i).RESPONSE,
+            TIMESTAMP: data.rows.item(i).TIMESTAMP,
+            FEEDBACK_ID: data.rows.item(i).FEEDBACK_ID,
+            DEVICE_ID: data.rows.item(i).DEVICE_ID,
+            TESTING: data.rows.item(i).TESTING,
           });
         }
       }
@@ -266,7 +271,8 @@ export class DatabaseProvider {
             Event_ID: data.rows.item(i).Event_ID,
             PARTICIPANTS_ID: data.rows.item(i).PARTICIPANTS_ID,
             QUESTIONS: data.rows.item(i).QUESTIONS,
-            RESPONSE: data.rows.item(i).RESPONSE
+            RESPONSE: data.rows.item(i).RESPONSE,
+            TIMESTAMP: data.rows.item(i).TIMESTAMP,
           });
         }
       }
