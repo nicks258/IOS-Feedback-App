@@ -79,12 +79,12 @@ export class DatabaseProvider {
     });
   }
 
-  addParticipants(Event_ID,PARTICIPANTS_ID,MEMBER_ID,PARTICIPANTS_NAME,PARTICIPANTS_GROUP_NAME,PARTICIPANTS_TYPE) {
+  addParticipants(Event_ID,PARTICIPANTS_ID,MEMBER_ID,PARTICIPANTS_NAME,PARTICIPANTS_GROUP_NAME,PARTICIPANTS_TYPE,STATUS) {
     // let participantId:number = PARTICIPANTS_ID;
     // let eventId:number = Event_ID;
     let sum:number = Event_ID + PARTICIPANTS_ID + MEMBER_ID;
-    let data = [Event_ID,PARTICIPANTS_ID,MEMBER_ID,PARTICIPANTS_NAME,PARTICIPANTS_GROUP_NAME,PARTICIPANTS_TYPE,sum];
-    return this.database.executeSql("INSERT INTO PARTICIPANTS_TABLE (Event_ID,PARTICIPANTS_ID,MEMBER_ID,PARTICIPANTS_NAME,PARTICIPANTS_GROUP_NAME,PARTICIPANTS_TYPE,PARTICIPANTS_ID_CONSTRAINT) VALUES (?,?, ?, ? , ?, ?, ? )", data).then(data => {
+    let data = [Event_ID,PARTICIPANTS_ID,MEMBER_ID,PARTICIPANTS_NAME,PARTICIPANTS_GROUP_NAME,PARTICIPANTS_TYPE,sum,STATUS];
+    return this.database.executeSql("INSERT INTO PARTICIPANTS_TABLE (Event_ID,PARTICIPANTS_ID,MEMBER_ID,PARTICIPANTS_NAME,PARTICIPANTS_GROUP_NAME,PARTICIPANTS_TYPE,PARTICIPANTS_ID_CONSTRAINT,STATUS) VALUES (?, ?, ?, ? , ?, ?, ?, ? )", data).then(data => {
       return data;
     }, err => {
       console.log('Error: ', err);
@@ -144,7 +144,7 @@ export class DatabaseProvider {
   }
 
   getParticipantsCoparts(eventId) {
-    return this.database.executeSql("SELECT * FROM PARTICIPANTS_TABLE WHERE EVENT_ID = ? AND PARTICIPANTS_TYPE = 'Group'", [eventId]).then((data) => {
+    return this.database.executeSql("SELECT * FROM PARTICIPANTS_TABLE WHERE EVENT_ID = ? AND PARTICIPANTS_TYPE = 'Group' AND STATUS = 'true'", [eventId]).then((data) => {
       let developers = [];
 
       if (data.rows.length > 0) {
@@ -319,7 +319,7 @@ export class DatabaseProvider {
   }
 
   deleteCoPart(id){
-    return this.database.executeSql("DELETE FROM 'PARTICIPANTS_TABLE' WHERE PARTICIPANTS_ID_CONSTRAINT = ? ",[id]).then(data => {
+    return this.database.executeSql("UPDATE  'PARTICIPANTS_TABLE' SET STATUS='false' WHERE PARTICIPANTS_ID_CONSTRAINT = ? ",[id]).then(data => {
       return data;
     }, err => {
       console.log('Error: ', err);

@@ -131,7 +131,8 @@ export class OptionPage {
                 member_id = group.member_id;
                 console.log( "member_id-> "+ member_id + "participant_group_member_name-> " + participant_group_member_name );
                 member_id = member_id;
-                env.dbProvider.addParticipants(event_Id,participant_details.participant_id, member_id, participant_group_member_name,participantName, participant_details.participant_type);
+                env.dbProvider.addParticipants(event_Id,participant_details.participant_id, member_id, participant_group_member_name,
+                  participantName, participant_details.participant_type,'true');
               }
               for (let participant_question of participant_questions) {
                 let question_id = participant_question.question_id;
@@ -142,7 +143,8 @@ export class OptionPage {
               }
             }
             else {
-              env.dbProvider.addParticipants(event_Id, participant_details.participant_id,participant_details.participant_id, participant_details.participant_name,participantName, participant_details.participant_type);
+              env.dbProvider.addParticipants(event_Id, participant_details.participant_id,participant_details.participant_id,
+                participant_details.participant_name,participantName, participant_details.participant_type,'true');
               for (let participant_question of participant_questions) {
                 let question_id = participant_question.question_id;
                 let question = participant_question.question;
