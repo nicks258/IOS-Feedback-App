@@ -31,7 +31,7 @@
 
             <ion-item *ngFor="let coparts of coPartsList" style="border:none;">
               <ion-label style="color: #ffffff;">{{coparts.PARTICIPANTS_NAME}}</ion-label>
-              <ion-radio *ngIf=" !isCheckbox "  (ionSelect)="selecteServer(coparts.PARTICIPANTS_ID,coparts.PARTICIPANTS_ID_CONSTRAINT)"  value={{coparts.MEMBER_ID}}></ion-radio>
+              <ion-radio *ngIf=" !isCheckbox "  (ionSelect)="selecteServer(coparts.MEMBER_ID,coparts.PARTICIPANTS_ID_CONSTRAINT)"  value={{coparts.MEMBER_ID}}></ion-radio>
               <ion-checkbox item-end *ngIf=" isCheckbox " (ionChange)="onChange(i, $event.checked, i)" ></ion-checkbox>
             </ion-item>
           </ion-list>

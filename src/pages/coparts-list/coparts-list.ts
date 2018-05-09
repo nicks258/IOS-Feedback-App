@@ -32,7 +32,7 @@ export class CopartsListPage {
   isCheckbox:boolean = false;
   isCopart;
   url;
-  testing;
+  testing = false;
   participantUniqueId;
   requestComeFromePage;
   participantId;
@@ -90,13 +90,17 @@ export class CopartsListPage {
     }
     else {
       env.loadingPopup.present();
+      if(this.testing == null)
+      {
+        this.testing = false;
+      }
       let device_id = this.device.uuid;
       for(let response of env.responseArray){
         let timestamp = new Date().getTime() + this.device.uuid;
         // console.log(env.eventId+" => "+env.participantId +" -> " +response.QUESTION_ID + " ->" + response.RESPONSE);
         // console.log("value->" + env.sendDetailsToServer(env.eventId,env.participantId,response.QUESTION_ID,response.RESPONSE,timestamp));
         env.sendDetailsToServer(env.eventId,env.participantId,response.QUESTION_ID,response.RESPONSE,timestamp,device_id,this.testing);
-        env.dbProvider.addResponse(env.eventId,env.participantId,response.QUESTION_ID,response.QUESTION,response.RESPONSE,timestamp,env.feedbackId,device_id,this.testing);
+        env.dbProvider.addResponse(env.eventId,env.participantId,response.QUESTION_ID,response.QUESTION,response.RESPONSE,timestamp,env.feedbackId,device_id,this.testing,this.selectedOption);
         // if(){
         //
         // }
@@ -128,12 +132,17 @@ export class CopartsListPage {
   sendDetailsToServer(eventId,participantId,questionId,response,timestamp,ipad_id,testing)  {
     let body = new FormData();
     let env = this;
+    if(testing == null)
+    {
+      testing = false;
+    }
     body.append('event_id', eventId);
     body.append('participant_id',participantId);
     body.append('question_id', questionId);
     body.append('response', response);
     body.append('timestamp',timestamp);
     body.append('testing',testing);
+    body.append('copart_id',this.selectedOption);
     body.append('feedback_id',""+env.feedbackId);
     body.append('ipad_id',ipad_id);
     let headers = new Headers();

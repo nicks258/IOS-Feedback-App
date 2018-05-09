@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, Platform} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import {OptionPage} from "../option/option";
 /**
@@ -16,8 +16,17 @@ import {OptionPage} from "../option/option";
 })
 export class ServerChangePage {
   baseURL:string;
-  serverType:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,private storage:Storage) {
+  serverType:boolean = false;
+  testing:boolean;
+  constructor(public navCtrl: NavController,public platform:Platform, public navParams: NavParams,private storage:Storage) {
+    platform.ready().then(data=>{
+     storage.get('testing').then(data=>{
+       this.serverType = data;
+       console.log("data=>" + data);
+     }).catch(error=>{
+       this.serverType = false;
+     })
+      });
   }
 
   ionViewDidLoad() {
@@ -26,6 +35,7 @@ export class ServerChangePage {
   submit(){
     let env = this;
     console.log("value-> "+ this.baseURL + "-> " + this.serverType);
+
     this.storage.set('testing',this.serverType).then(data=>{
       env.navCtrl.push(OptionPage);
     }).catch(error=>{

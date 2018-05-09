@@ -30,7 +30,7 @@ export class ThankyouPage {
   selectedType;
   feedbackId:number;
   loadingPopup;
-  testing
+  testing = false;
   url;
   isCopart;
   participantId;
@@ -80,6 +80,7 @@ export class ThankyouPage {
       body.append('participant_id',participantId);
       body.append('question_id', questionId);
       body.append('response', response);
+      body.append('copart_id','NA');
       body.append('testing',testing);
       body.append('timestamp',timestamp);
       body.append('feedback_id',""+env.feedbackId);
@@ -103,12 +104,16 @@ export class ThankyouPage {
     let env = this;
     env.loadingPopup.present();
     if(this.selectedType == 'individual'){
+      if(this.testing == null)
+      {
+        this.testing = false;
+      }
         for(let response of env.responseArray){
           let deviceId = this.device.uuid;
           let timestamp = new Date().getTime() + this.device.uuid;
           console.log(env.eventId+" => "+env.participantId +" -> " +response.QUESTION_ID +" -> "+ response.QUESTION +" -> " + response.RESPONSE);
           env.sendDetailsToServer(env.eventId,env.participantId,response.QUESTION_ID,response.RESPONSE,timestamp,deviceId,this.testing);
-          env.dbProvider.addResponse(env.eventId,env.participantId,response.QUESTION_ID,response.QUESTION,response.RESPONSE,timestamp,env.feedbackId,deviceId,this.testing);
+          env.dbProvider.addResponse(env.eventId,env.participantId,response.QUESTION_ID,response.QUESTION,response.RESPONSE,timestamp,env.feedbackId,deviceId,this.testing,'NA');
           // if()) {
           //
           // }

@@ -66,6 +66,7 @@ export class OptionPage {
         body.append('timestamp',response.TIMESTAMP);
         body.append('feedback_id',""+response.FEEDBACK_ID);
         body.append('ipad_id',response.DEVICE_ID);
+        body.append('copart_id',response.COPART_ID);
         let headers = new Headers();
         let options = {headers: headers};
         this.http.post(this.url +'insertresponses/', body).subscribe(data => {
@@ -129,7 +130,7 @@ export class OptionPage {
                 let participant_group_member_name = group.participant_group_member_name;
                 member_id = group.member_id;
                 console.log( "member_id-> "+ member_id + "participant_group_member_name-> " + participant_group_member_name );
-                member_id = member_id + 101;
+                member_id = member_id;
                 env.dbProvider.addParticipants(event_Id,participant_details.participant_id, member_id, participant_group_member_name,participantName, participant_details.participant_type);
               }
               for (let participant_question of participant_questions) {

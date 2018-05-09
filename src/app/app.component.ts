@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import {ParticipantListPage} from "../pages/participant-list/participant-list";
 import {ScreenOrientation} from "@ionic-native/screen-orientation";
 import {OptionPage} from "../pages/option/option";
+import {ServerChangePage} from "../pages/server-change/server-change";
 @Component({
   templateUrl: 'app.html'
 })

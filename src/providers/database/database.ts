@@ -58,10 +58,10 @@ export class DatabaseProvider {
     });
   }
 
-  addResponse(Event_ID,PARTICIPANTS_ID,QUESTION_ID,QUESTIONS,RESPONSE,TIMESTAMP,FEEDBACK_ID,DEVICE_ID,TESTING) {
+  addResponse(Event_ID,PARTICIPANTS_ID,QUESTION_ID,QUESTIONS,RESPONSE,TIMESTAMP,FEEDBACK_ID,DEVICE_ID,TESTING,COPART_ID) {
     // let sum :number = PARTICIPANTS_ID + QUESTION_ID;
-    let data = [Event_ID,PARTICIPANTS_ID,QUESTION_ID,QUESTIONS,RESPONSE,TIMESTAMP,FEEDBACK_ID,DEVICE_ID,TESTING];
-    return this.database.executeSql("INSERT INTO RESPONSE_TABLE (Event_ID,PARTICIPANTS_ID,QUESTION_ID,QUESTIONS,RESPONSE,TIMESTAMP,FEEDBACK_ID,DEVICE_ID,TESTING) VALUES (?, ? , ?, ?, ?, ?, ?, ?,?)", data).then(data => {
+    let data = [Event_ID,PARTICIPANTS_ID,QUESTION_ID,QUESTIONS,RESPONSE,TIMESTAMP,FEEDBACK_ID,DEVICE_ID,TESTING,COPART_ID];
+    return this.database.executeSql("INSERT INTO RESPONSE_TABLE (Event_ID,PARTICIPANTS_ID,QUESTION_ID,QUESTIONS,RESPONSE,TIMESTAMP,FEEDBACK_ID,DEVICE_ID,TESTING,COPART_ID) VALUES (?, ? , ?, ?, ?, ?, ? , ?, ?, ?)", data).then(data => {
       return data;
     }, err => {
       console.log('Error: ', err);
@@ -251,6 +251,7 @@ export class DatabaseProvider {
             FEEDBACK_ID: data.rows.item(i).FEEDBACK_ID,
             DEVICE_ID: data.rows.item(i).DEVICE_ID,
             TESTING: data.rows.item(i).TESTING,
+            COPART_ID: data.rows.item(i).COPART_ID,
           });
         }
       }
