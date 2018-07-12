@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class  RemoteServiceProvider {
-  baseUrl:string = "http://52.66.132.37/feed_back_app_updated/Rest/";
+  baseUrl:string = "http://dtcmfeedback.digitalpico.com/Rest/";
   constructor() {
     console.log('Hello RemoteServiceProvider Provider');
   }

@@ -74,8 +74,9 @@ export class DatabaseProvider {
     return this.database.executeSql("INSERT INTO EVENTS_TABLE_NEW (Event_ID,EVENT_NAME,IS_COPARTS) VALUES (?, ?, ?)", data).then(data => {
       return data;
     }, err => {
-      console.log('Error: ', err);
-      return err;
+      return this.database.executeSql("UPDATE EVENTS_TABLE_NEW SET EVENT_NAME = ? , IS_COPARTS = ?  WHERE Event_ID = ?",[EVENT_NAME,IS_COPARTS,Event_ID]).then(data => {
+        return data;
+      });
     });
   }
 
