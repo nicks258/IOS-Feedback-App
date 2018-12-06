@@ -1,0 +1,22 @@
+@font-face {
+  font-family: Dubai-Regular;
+  src: url("../assets/font/Dubai-Regular.ttf");
+}
+*
+{
+  font-family: Dubai-Regular;
+}
+
+
+page-option {
+  .background_image
+  {
+    background-image: url("../assets/imgs/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .btn
+  {
+    border-radius: 15px 0;margin: 10px 15px;background-color: rgb(0,144,215);border-color: rgb(0,144,215);
+  }
+}

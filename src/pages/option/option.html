@@ -1,0 +1,46 @@
+<!--
+  Generated template for the OptionPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+
+
+<ion-content no-bounce padding class="background_image">
+  <img src="assets/imgs/dubaiwhite.png" style="width: 40mm;float: right">
+  <ion-grid>
+    <ion-row>
+      <ion-col style="margin-top: 25%;" align="center" col-md-6 offset-3>
+
+        <ion-col col-md-6>
+          <button ion-button class="btn"  round (click)="syncResponseData()" >Sync Response</button>
+        </ion-col>
+
+        <ion-col col-md-6>
+          <button ion-button class="btn"  round (click)="updateAppData()" >Update App Data</button>
+        </ion-col>
+
+        <ion-col col-md-6>
+          <button ion-button class="btn" round (click)="deleteAppData()" >Delete App Data</button>
+        </ion-col>
+
+        <ion-col col-md-6>
+          <button ion-button class="btn" round (click)="deleteResponse()" >Delete Response</button>
+        </ion-col>
+
+        <ion-col align="center" col-md-6>
+          <button ion-button class="btn" color="primary" round (click)="selectEvent()" > View Records</button>
+        </ion-col>
+
+        <ion-col align="center" col-md-6>
+          <button ion-button class="btn" color="primary" round (click)="changeServer()" > Change Server</button>
+        </ion-col>
+      </ion-col>
+      <ion-col align="center" col-md-12>
+        <button ion-button class="btn" color="primary" round (click)="onBack()" > Back</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

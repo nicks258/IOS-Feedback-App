@@ -1,0 +1,46 @@
+
+<ion-content no-bounce padding class="background_image">
+
+  <!--<a><ion-icon name="settings"></ion-icon></a>-->
+
+  <button (click) ="optionsPage()" class="home" style="background-color: transparent" ion-button >
+    <ion-icon name="settings"></ion-icon>
+  </button>
+
+  <img src="assets/imgs/dubaiwhite.png" style="width: 40mm;float: right">
+  <ion-item>
+
+    <ion-select [(ngModel)]="eventName">
+        <ion-option value="Select Event" selected="true">Select Event</ion-option>
+        <ion-option *ngFor="let item of developers;" value="{{item.EVENT_NAME}}">{{item.EVENT_NAME}}
+        </ion-option>
+    </ion-select>
+  </ion-item>
+  <button ion-button class="button_submit" (click)="loadAllQuestions()" ion-button round>{{actionName}}</button>
+</ion-content>
+
+<!--<ion-content padding class="background_image">-->
+
+  <!--<a><ion-icon name="settings"></ion-icon></a>-->
+
+  <!--<img src="assets/imgs/dubaiwhite.png" style="width: 40mm;float: right">-->
+
+  <!--<ion-list>-->
+    <!--<ion-item>-->
+      <!--&lt;!&ndash;     <ion-label>Select Events</ion-label> &ndash;&gt;-->
+      <!--<ion-select [(ngModel)]="Events" >-->
+        <!--<ion-option value="Select Event" selected="true">Select Event</ion-option>-->
+        <!--<ion-option value="ATM 2018">ATM 2018</ion-option>-->
+        <!--<ion-option value="SATTE 2018">SATTE 2018</ion-option>-->
+        <!--<ion-option value="ITB Berlin 2018">ITB Berlin 2018</ion-option>-->
+        <!--<ion-option value="Roadshow - China">Roadshow - China</ion-option>-->
+        <!--<ion-option value="CRUISE">CRUISE</ion-option>-->
+        <!--<ion-option value="Sea trade USA 2018">Sea trade USA 2018</ion-option>-->
+      <!--</ion-select>-->
+    <!--</ion-item>-->
+  <!--</ion-list>-->
+
+  <!--<button ion-button class="button_submit">Submit</button>-->
+
+
+<!--</ion-content>-->

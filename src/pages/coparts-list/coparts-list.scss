@@ -1,0 +1,103 @@
+@font-face {
+  font-family: Dubai-Regular;
+  src: url("../assets/font/Dubai-Regular.ttf");
+}
+*
+{
+  font-family: Dubai-Regular;
+}
+
+page-coparts-list {
+  .background_image
+  {
+    background-image: url("../assets/imgs/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  ion-icon {
+    display: inline-block;
+    font-size: 2em;
+    color: #ffffff;
+  }
+  .thank
+  {
+    text-align: center;
+    font-size: 4em;
+    color: rgb(198,87,154);
+    margin-top: 25%;
+    font-weight: bold;
+  }
+  ion-label
+  {
+    color:#ffffff;
+  }
+  .item-ios
+  {
+    background: transparent;
+    border: none;
+  }
+  .item-block:first-child
+  {
+    border-top: none;
+  }
+  .item-block .item-inner
+  {
+    border-bottom: none!important;
+  }
+  ion-radio
+  {
+    background: rgb(0,144,215);
+    padding: 2px 4px;
+    border-radius: 0 15px 15px;
+    margin: 0;
+  }
+  .item-radio-checked ion-radio
+  {
+    background: rgb(198,87,154);
+  }
+  .radio-checked .radio-inner
+  {
+    border-color: rgb(198,87,154)!important;
+  }
+  .button_submit
+  {
+    display: block;
+    margin: auto;
+    margin-top: 0%;
+    background-color: #0090d7;
+    padding: 0 2em;
+    border-radius: 0;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+  .home
+  {
+    border-radius: 4px;
+    height: 1.8em;
+    font-size: 1.6rem;
+    color: #fff;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+  }
+
+  .checkbox-icon
+  {
+    border-radius: 0!important;
+    border-color: #ffffff!important;
+    background-color: rgb(0,144,215)!important;
+    border-width: 2px!important;
+  }
+  .checkbox-inner
+  {
+    border-width: 2px!important;
+    border-top-width: 0!important;
+    border-left-width: 0!important;
+  }
+
+  .checkbox-checked
+  {
+    border-color: #ffffff!important;
+    background-color: rgb(0,144,215)!important;
+  }
+}

@@ -1,0 +1,198 @@
+<!--
+  Generated template for the QuestionsTablePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+
+<!--<ion-content no-bounce padding>-->
+
+  <!--<h1 align="center">{{questionsValue}} </h1>-->
+  <!--<ion-list style="margin-top: 30px" radio-group [(ngModel)]="selectedOption">-->
+    <!--<ion-item *ngFor='let i of crm_val;let index = index'>-->
+      <!--<ion-label >{{i}}</ion-label>-->
+      <!--<ion-radio value={{i}}></ion-radio>-->
+    <!--</ion-item>-->
+    <!--<button style="display: block;margin-left: auto;margin-right: auto;margin-top: 52px;" (click)="nextQuestion()" ion-button round>Submit</button>-->
+  <!--</ion-list>-->
+<!--</ion-content>-->
+
+
+
+<ion-content no-bounce  padding class="background_image">
+
+
+  <button (click) ="alertOnly()" class="home" style="background-color: transparent" ion-button >
+    <ion-icon name="home"></ion-icon>
+  </button>
+
+  <img src="assets/imgs/dubaiwhite.png" style="width: 40mm;float: right">
+
+
+  <ion-grid>
+
+    <ion-row style="margin-top: 5%;height: 600px;">
+
+      <ion-col col-md-1 style="text-align: center;padding-right: 15px;">
+
+        <button *ngIf="backButtonShow" (click)="prevPage()" class="back_arrow" ion-button >
+          <ion-icon name="arrow-back" ></ion-icon>
+        </button>
+
+
+      </ion-col>
+
+      <ion-col col-md-10 style="background-color: rgba(0, 0, 0, 0.4);    border-radius: 60px 0;">
+
+        <ion-row style="background: rgb(0,144,215);border-radius: 25px 0 25px 0;margin:30px;">
+
+          <ion-col col-md-1 class="number">{{i+1}}</ion-col>
+          <ion-col col-md-10 class="text">{{questionsValue}}</ion-col>
+
+
+
+        </ion-row>
+
+        <!--Multiple Questions Start-->
+        <ion-row  *ngIf="questionType == 'multiple' " style="margin:30px;">
+          <ion-item *ngFor='let i of crm_val;let index = index'>
+            <ion-label>{{i}}  </ion-label>
+            <ion-checkbox *ngIf=" consoleOnly(i) " checked  (ionChange)="onChange(i, $event.checked, i)"></ion-checkbox>
+            <ion-checkbox *ngIf=" !consoleOnly(i) "   (ionChange)="onChange(i, $event.checked, i)"></ion-checkbox>
+
+          </ion-item>
+
+          <!--<ion-item>-->
+          <!--<ion-label>Met new/potential clients</ion-label>-->
+          <!--<ion-checkbox ></ion-checkbox>-->
+          <!--</ion-item>-->
+
+          <!--<ion-item class="third">-->
+            <!--<ion-input type="text" placeholder="Other"></ion-input>-->
+          <!--</ion-item>-->
+
+        </ion-row>
+
+        <!--Multiple Questions Ends-->
+
+        <!--Single Questions Start-->
+        <ion-list *ngIf="questionType == 'single' " radio-group style="margin: 10px 50px;">
+
+          <ion-item *ngFor='let i of crm_val;let index = index' style="border:none;">
+            <ion-label style="color: #ffffff;">{{i}}</ion-label>
+            <!--<p *ngIf="selectedOptionPrev == i">{{i}}</p>-->
+            <ion-radio *ngIf="selectedOptionPrev == i" (ionSelect)="selecteServer(i)" checked  value={{i}}></ion-radio>
+            <ion-radio *ngIf="selectedOptionPrev != i" (ionSelect)="selecteServer(i)"  value={{i}}></ion-radio>
+            <!--<div  *ngIf="selectedOptionPrev == i">-->
+            <!--<ion-label style="color: #ffffff;">Kiikki</ion-label>-->
+            <!--<ion-radio  checked = "true"   value="ifjire"></ion-radio>-->
+
+          </ion-item>
+
+          <!--<ion-item style="border:none;">-->
+          <!--<ion-label style="color: #ffffff;">Rust</ion-label>-->
+          <!--<ion-radio value="rust"></ion-radio>-->
+          <!--</ion-item>-->
+
+          <!--<ion-item style="border:none;">-->
+          <!--<ion-label style="color: #ffffff;">Python</ion-label>-->
+          <!--<ion-radio value="python"></ion-radio>-->
+          <!--</ion-item>-->
+          <!--</ion-list>-->
+
+          <!--Multiple Questions Ends-->
+
+          <!--</ion-col>-->
+        </ion-list>
+
+      <!--Rating Start-->
+
+        <ion-list *ngIf="questionType == 'rating' " class="seven_screen" radio-group style="margin: 5px 50px;">
+
+          <ion-item  >
+            <ion-radio *ngIf="selectedOptionPrev == 1" (ionSelect)="selecteServer(1)" checked class="one" value="1"></ion-radio>
+            <ion-radio *ngIf="selectedOptionPrev != 1" (ionSelect)="selecteServer(1)" class="one" value="1"></ion-radio>
+          </ion-item>
+
+          <ion-item  >
+            <ion-radio *ngIf="selectedOptionPrev == 2" (ionSelect)="selecteServer(2)" checked class="two" value="2"></ion-radio>
+            <ion-radio *ngIf="selectedOptionPrev != 2" (ionSelect)="selecteServer(2)" class="two" value="2" ></ion-radio>
+          </ion-item>
+
+          <ion-item  >
+            <ion-radio *ngIf="selectedOptionPrev == 3" (ionSelect)="selecteServer(3)" checked class="three" value="3"></ion-radio>
+            <ion-radio *ngIf="selectedOptionPrev != 3" (ionSelect)="selecteServer(3)" class="three" value="3" ></ion-radio>
+          </ion-item>
+
+          <ion-item  >
+            <ion-radio *ngIf="selectedOptionPrev == 4" (ionSelect)="selecteServer(4)" checked class="four" value="4"></ion-radio>
+            <ion-radio *ngIf="selectedOptionPrev != 4" (ionSelect)="selecteServer(4)" class="four" value="4" ></ion-radio>
+          </ion-item>
+
+          <ion-item  >
+            <ion-radio *ngIf="selectedOptionPrev == 5" (ionSelect)="selecteServer(5)" checked class="five" value="5"></ion-radio>
+            <ion-radio *ngIf="selectedOptionPrev != 5" (ionSelect)="selecteServer(5)" class="five" value="5" ></ion-radio>
+          </ion-item>
+
+          <ion-item >
+            <ion-radio *ngIf="selectedOptionPrev == 6" (ionSelect)="selecteServer(6)" checked class="six" value="6"></ion-radio>
+            <ion-radio *ngIf="selectedOptionPrev != 6" (ionSelect)="selecteServer(6)" class="six" value="6" ></ion-radio>
+          </ion-item>
+
+          <ion-item >
+            <ion-radio *ngIf="selectedOptionPrev == 7" (ionSelect)="selecteServer(7)" checked class="seven" value="7"></ion-radio>
+            <ion-radio *ngIf="selectedOptionPrev != 7" (ionSelect)="selecteServer(7)" class="seven" value="7" ></ion-radio>
+          </ion-item>
+
+          <ion-item >
+            <ion-radio *ngIf="selectedOptionPrev == 8" (ionSelect)="selecteServer(8)" checked class="eight" value="8"></ion-radio>
+            <ion-radio *ngIf="selectedOptionPrev != 8" (ionSelect)="selecteServer(8)" class="eight" value="8" ></ion-radio>
+          </ion-item>
+
+          <ion-item >
+            <ion-radio *ngIf="selectedOptionPrev == 9" (ionSelect)="selecteServer(9)" checked class="nine" value="9"></ion-radio>
+            <ion-radio *ngIf="selectedOptionPrev != 9" (ionSelect)="selecteServer(9)" class="nine" value="9" ></ion-radio>
+          </ion-item>
+
+          <ion-item >
+            <ion-radio *ngIf="selectedOptionPrev == 10" (ionSelect)="selecteServer(10)" checked style="padding: 12px 18px" class="ten" value="10"></ion-radio>
+            <ion-radio *ngIf="selectedOptionPrev != 10" (ionSelect)="selecteServer(10)" style="padding: 12px 18px" class="ten" value="10"></ion-radio>
+          </ion-item>
+
+        </ion-list>
+
+        <!--rating end-->
+
+        <!--Suggestion start-->
+
+        <ion-list class="five" *ngIf="questionType == 'suggestion' " style="margin:30px 80px;">
+
+          <ion-item>
+            <ion-input type="text" [(ngModel)]="suggestion_text" placeholder="Suggestion"></ion-input>
+          </ion-item>
+
+        </ion-list>
+
+        <button *ngIf="lastQuestion" ion-button class="button_submit" (click)="nextPage()" >Submit</button>
+
+        <!--Suggestion Ends-->
+
+      </ion-col>
+
+          <ion-col col-md-1 style="text-align: center;padding-left: 15px;">
+
+            <button class="arrow-forward" *ngIf="!lastQuestion"  ion-button (click)="nextQuestion()">
+              <ion-icon name="arrow-forward"  ></ion-icon>
+            </button>
+
+
+          </ion-col>
+
+
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>
+<!--</ion-content>-->

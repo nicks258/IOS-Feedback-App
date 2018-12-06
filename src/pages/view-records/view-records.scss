@@ -1,0 +1,97 @@
+@font-face {
+  font-family: Dubai-Regular;
+  src: url("../assets/font/Dubai-Regular.ttf");
+}
+@font-face {
+  font-family: Dubai-Medium;
+  src: url("../assets/font/Dubai-Medium.ttf");
+}
+@font-face {
+  font-family: Dubai-Light;
+  src: url("../assets/font/Dubai-Light.ttf");
+}
+*
+{
+  font-family: Dubai-Medium;
+}
+
+
+page-view-records {
+  .background_image
+  {
+    background-image: url("../assets/imgs/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .button_submit
+  {
+    margin: auto;
+    background-color: #0090d7;
+    padding: 0 1.8em;
+    border-radius: 0;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    height: 2.5em;
+  }
+  .back
+  {
+    background-color: #fff;
+    margin-top: 30px;
+  }
+  .back h3
+  {
+    background-color: #c6579a;
+    margin: 0;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+    border-bottom: 1px solid #ffffff;
+    border-top-left-radius: 30px;
+  }
+  ion-icon {
+    display: inline-block;
+    font-size: 2.5em;
+    color: #fff;
+  }
+  .col {
+    border-bottom-style: none;
+    border-right-style: none;
+    word-break: break-all;
+  }
+
+  .col:last-child {
+    border-right: solid 1px ddd;
+  }
+  .row:last-child .col {
+    border-bottom: solid 1px ddd;
+  }
+  .border_tab .row
+  {
+    border-bottom :1px solid #ddd;
+  }
+  .border_tab .row:nth-child(even)
+  {
+    background-color: #f9f9f9;
+  }
+  /* width */
+  .border_tab::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  /* Track */
+  .border_tab::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  .border_tab::-webkit-scrollbar-thumb {
+    background: rgb(0,144,215);
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  .border_tab::-webkit-scrollbar-thumb:hover {
+    background: #b30000;
+  }
+}

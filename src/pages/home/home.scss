@@ -1,0 +1,106 @@
+page-home {
+  .background_image
+  {
+    background-image: url("../assets/imgs/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .item-select
+  {
+    width: 40%;
+    padding: 5px 0;
+    background-color: rgb(198,87,154);
+    font-size: 22px;
+    border: none;
+    color: #ffffff;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    position: absolute;
+    top: 42%;
+    left: 31%;
+  }
+  .select-ios
+  {
+    margin: auto;
+  }
+  ion-select
+  {
+    max-width: 100%;
+  }
+  .select-ios .select-icon .select-icon-inner
+  {
+    color: #ffffff;
+  }
+  .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block
+  {
+    border-bottom: 0.55px solid rgb(198, 87, 154);
+  }
+  .list-ios > .item-block:first-child
+  {
+    border-top: 0.55px solid rgb(198, 87, 154);
+  }
+  .select-ios .select-icon .select-icon-inner
+  {
+    top: 70%;
+  }
+  .button_submit
+  {
+    position: absolute;
+    bottom: 15%;
+    left: 42%;
+    background-color: rgb(0,144,215);
+    padding: 0 2em;
+    border-radius: 0;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+  ion-icon {
+    display: inline-block;
+    font-size: 2em;
+    color: #ffffff;
+  }
+  .item-inner{
+    border: none!important;
+  }
+  .select-icon .select-icon-inner
+  {
+    top: 100%!important;
+  }
+}
+.alert-head,.alert-message
+{
+  display: none;
+}
+.alert-wrapper
+{
+  border-radius: 30px 0!important;
+  padding: 15px 0 0!important;
+  background-color: rgb(0,144,215)!important;
+}
+.alert-radio-label
+{
+  color: #fff!important;
+  padding: 0px 13px!important;
+}
+[aria-checked=true] .alert-radio-label
+{
+  color: #000!important;
+}
+.alert-tappable
+{
+  min-height: 35px!important;
+  font-size: 16px!important;
+}
+.alert-radio-group, .alert-checkbox-group
+{
+  border-top: 0px solid #dbdbdf!important;
+}
+[aria-checked=true] .alert-radio-inner
+{
+  border-color: #000!important;
+}
+.alert-button
+{
+  font-size: 17px;
+  color: #fff!important;
+}
