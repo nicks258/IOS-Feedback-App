@@ -13,7 +13,7 @@ import {ServerChangePage} from "../pages/server-change/server-change";
 })
 export class MyApp {
   rootPage:any = HomePage;
-
+  //OKAT
   constructor(private screenOrientation: ScreenOrientation,platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
