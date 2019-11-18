@@ -108,56 +108,56 @@
 
       <!--Rating Start-->
 
-        <ion-list *ngIf="questionType == 'rating' " class="seven_screen" radio-group style="margin: 5px 50px;">
+        <ion-list *ngIf="questionType == 'rating' " [(ngModel)]="ratingModel" class="seven_screen" radio-group style="margin: 5px 50px;">
 
           <ion-item  >
-            <ion-radio *ngIf="selectedOptionPrev == 1" (ionSelect)="selecteServer(1)" checked class="one" value="1"></ion-radio>
-            <ion-radio *ngIf="selectedOptionPrev != 1" (ionSelect)="selecteServer(1)" class="one" value="1"></ion-radio>
-          </ion-item>
-
-          <ion-item  >
-            <ion-radio *ngIf="selectedOptionPrev == 2" (ionSelect)="selecteServer(2)" checked class="two" value="2"></ion-radio>
-            <ion-radio *ngIf="selectedOptionPrev != 2" (ionSelect)="selecteServer(2)" class="two" value="2" ></ion-radio>
+            <ion-radio *ngIf="selectedRating == 1" (ionSelect)="selecteServer(1)" checked class="one" value="1"></ion-radio>
+            <ion-radio *ngIf="selectedRating != 1" (ionSelect)="selecteServer(1)" class="one" value="1"></ion-radio>
           </ion-item>
 
           <ion-item  >
-            <ion-radio *ngIf="selectedOptionPrev == 3" (ionSelect)="selecteServer(3)" checked class="three" value="3"></ion-radio>
-            <ion-radio *ngIf="selectedOptionPrev != 3" (ionSelect)="selecteServer(3)" class="three" value="3" ></ion-radio>
+            <ion-radio *ngIf="selectedRating == 2" (ionSelect)="selecteServer(2)" checked class="two" value="2"></ion-radio>
+            <ion-radio *ngIf="selectedRating != 2" (ionSelect)="selecteServer(2)" class="two" value="2" ></ion-radio>
           </ion-item>
 
           <ion-item  >
-            <ion-radio *ngIf="selectedOptionPrev == 4" (ionSelect)="selecteServer(4)" checked class="four" value="4"></ion-radio>
-            <ion-radio *ngIf="selectedOptionPrev != 4" (ionSelect)="selecteServer(4)" class="four" value="4" ></ion-radio>
+            <ion-radio *ngIf="selectedRating == 3" (ionSelect)="selecteServer(3)" checked class="three" value="3"></ion-radio>
+            <ion-radio *ngIf="selectedRating != 3" (ionSelect)="selecteServer(3)" class="three" value="3" ></ion-radio>
           </ion-item>
 
           <ion-item  >
-            <ion-radio *ngIf="selectedOptionPrev == 5" (ionSelect)="selecteServer(5)" checked class="five" value="5"></ion-radio>
-            <ion-radio *ngIf="selectedOptionPrev != 5" (ionSelect)="selecteServer(5)" class="five" value="5" ></ion-radio>
+            <ion-radio *ngIf="selectedRating == 4" (ionSelect)="selecteServer(4)" checked class="four" value="4"></ion-radio>
+            <ion-radio *ngIf="selectedRating != 4" (ionSelect)="selecteServer(4)" class="four" value="4" ></ion-radio>
+          </ion-item>
+
+          <ion-item  >
+            <ion-radio *ngIf="selectedRating == 5" (ionSelect)="selecteServer(5)" checked class="five" value="5"></ion-radio>
+            <ion-radio *ngIf="selectedRating != 5" (ionSelect)="selecteServer(5)" class="five" value="5" ></ion-radio>
           </ion-item>
 
           <ion-item >
-            <ion-radio *ngIf="selectedOptionPrev == 6" (ionSelect)="selecteServer(6)" checked class="six" value="6"></ion-radio>
-            <ion-radio *ngIf="selectedOptionPrev != 6" (ionSelect)="selecteServer(6)" class="six" value="6" ></ion-radio>
+            <ion-radio *ngIf="selectedRating == 6" (ionSelect)="selecteServer(6)" checked class="six" value="6"></ion-radio>
+            <ion-radio *ngIf="selectedRating != 6" (ionSelect)="selecteServer(6)" class="six" value="6" ></ion-radio>
           </ion-item>
 
           <ion-item >
-            <ion-radio *ngIf="selectedOptionPrev == 7" (ionSelect)="selecteServer(7)" checked class="seven" value="7"></ion-radio>
-            <ion-radio *ngIf="selectedOptionPrev != 7" (ionSelect)="selecteServer(7)" class="seven" value="7" ></ion-radio>
+            <ion-radio *ngIf="selectedRating == 7" (ionSelect)="selecteServer(7)" checked class="seven" value="7"></ion-radio>
+            <ion-radio *ngIf="selectedRating != 7" (ionSelect)="selecteServer(7)" class="seven" value="7" ></ion-radio>
           </ion-item>
 
           <ion-item >
-            <ion-radio *ngIf="selectedOptionPrev == 8" (ionSelect)="selecteServer(8)" checked class="eight" value="8"></ion-radio>
-            <ion-radio *ngIf="selectedOptionPrev != 8" (ionSelect)="selecteServer(8)" class="eight" value="8" ></ion-radio>
+            <ion-radio *ngIf="selectedRating == 8" (ionSelect)="selecteServer(8)" checked class="eight" value="8"></ion-radio>
+            <ion-radio *ngIf="selectedRating != 8" (ionSelect)="selecteServer(8)" class="eight" value="8" ></ion-radio>
           </ion-item>
 
           <ion-item >
-            <ion-radio *ngIf="selectedOptionPrev == 9" (ionSelect)="selecteServer(9)" checked class="nine" value="9"></ion-radio>
-            <ion-radio *ngIf="selectedOptionPrev != 9" (ionSelect)="selecteServer(9)" class="nine" value="9" ></ion-radio>
+            <ion-radio *ngIf="selectedRating == 9" (ionSelect)="selecteServer(9)" checked class="nine" value="9"></ion-radio>
+            <ion-radio *ngIf="selectedRating != 9" (ionSelect)="selecteServer(9)" class="nine" value="9" ></ion-radio>
           </ion-item>
 
           <ion-item >
-            <ion-radio *ngIf="selectedOptionPrev == 10" (ionSelect)="selecteServer(10)" checked style="padding: 12px 18px" class="ten" value="10"></ion-radio>
-            <ion-radio *ngIf="selectedOptionPrev != 10" (ionSelect)="selecteServer(10)" style="padding: 12px 18px" class="ten" value="10"></ion-radio>
+            <ion-radio *ngIf="selectedRating == 10" (ionSelect)="selecteServer(10)" checked style="padding: 12px 18px" class="ten" value="10"></ion-radio>
+            <ion-radio *ngIf="selectedRating != 10" (ionSelect)="selecteServer(10)" style="padding: 12px 18px" class="ten" value="10"></ion-radio>
           </ion-item>
 
         </ion-list>

@@ -33,6 +33,7 @@ import {ViewRecordsPage} from "../pages/view-records/view-records";
 import {ServerChangePage} from "../pages/server-change/server-change";
 import { RemoteServiceProvider } from '../providers/remote-service/remote-service';
 import { HttpClient } from '@angular/common/http';
+import {TestingPage} from "../pages/testing/testing";
 @NgModule({
   declarations: [
     MyApp,
@@ -42,6 +43,7 @@ import { HttpClient } from '@angular/common/http';
     QuestionsTablePage,
     OptionPage,
     OptionsPage,
+    TestingPage,
     CopartsListPage,
     ServerChangePage,
     ThankyouPage,
@@ -68,6 +70,7 @@ import { HttpClient } from '@angular/common/http';
     ServerChangePage,
     OptionPage,
     ViewRecordsPage,
+    TestingPage,
     QuestionsTablePage,
     ThankyouPage,
   ],

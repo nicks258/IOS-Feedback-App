@@ -27,6 +27,7 @@ export class QuestionsTablePage {
   list:any;
   suggestion_text;
   selectedRating;
+  ratingModel:null;
   crm_key = [];
   selectedMultiple;
   selectedOptions;
@@ -308,7 +309,7 @@ export class QuestionsTablePage {
   }
 
   nextQuestion(){
-
+    this.ratingModel = null;
     for(let response of this.responseArray)
     {
       console.log("RESPONSE START->> "+response.RESPONSE);
@@ -426,6 +427,7 @@ export class QuestionsTablePage {
   }
 
   prevPage(){
+    this.ratingModel = null;
     let env = this;
     if (this.i<this.questionsArrayLength)
     {
@@ -617,6 +619,7 @@ export class QuestionsTablePage {
     console.log("this.responseArray[this.i].RESPONSE->" + this.responseArray.length +" I length " + this.i);
     if(this.responseArray.length > this.i ){
       this.selectedOptionPrev = this.responseArray[this.i].RESPONSE;
+      this.selectedRating = this.responseArray[this.i].RESPONSE;
       console.log("checkNextQuestionAnswer selectedOptionPrev->" + this.selectedOptionPrev);
       this.questions = this.questionsArray[this.questionsArrayLength - 1 - this.i];
       // console.log("questionType" + this.questions.QUESTION_TYPE + "this.selectedOptionPrev.indexOf(',')-> "+ this.selectedOptionPrev.indexOf(',') );
@@ -646,6 +649,7 @@ export class QuestionsTablePage {
       this.suggestion_text = this.selectedOptionPrev;
     }
     else {
+      console.log("ELSE ELSE");
       this.selectedOptionPrev ="";
       this.suggestion_text = "";
     }

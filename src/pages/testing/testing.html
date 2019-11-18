@@ -1,0 +1,19 @@
+<ion-list *ngIf="isQuestionMe == 'rating' " radio-group [(ngModel)]="relationship">
+  <ion-item>
+    <ion-label>Friends</ion-label>
+    <ion-radio value="friends" checked></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label>Family</ion-label>
+    <ion-radio value="family"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label>Enemies</ion-label>
+    <ion-radio value="enemies" ></ion-radio>
+  </ion-item>
+  <button ion-button (click)="clickMe()"> Click</button>
+</ion-list>
+
+<ion-list *ngIf="isQuestionMe == 'sdc' " radio-group [(ngModel)]="relationship">
+
+</ion-list>
